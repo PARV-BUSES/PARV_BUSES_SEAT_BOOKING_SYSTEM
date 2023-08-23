@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // useEffect(() => {
 //   axios.post("http://localhost:8080/user/login")
@@ -15,7 +16,7 @@ import { useState, useEffect } from "react";
 
 
 function Login() {
-
+   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
 
     email: "",
@@ -24,12 +25,23 @@ function Login() {
 
   })
 
+  const [serverRes,setServerRes] = useState({
+    id:0,
+    firstname: "",
+    lastname: "",
+    mobile: "",
+    email: "",
+    age: 0,
+    gender: ""
+  })
+
+
 
   const handleLogin =() =>{
     axios
     .post("http://localhost:8080/user/login",loginData)
-    .then((res)=>
-    console.log(res.data),console.log("signup sucessfull"))
+    .then((res)=> setServerRes(res.data))
+    //console.log(res.data),console.log("signup sucessfull"))
     .catch((error)=>{
       console.log(error);
     })
@@ -41,6 +53,10 @@ function Login() {
     // console.log(loginData);
     setLoginData(loginDataCopy);
 
+  }
+
+  if(serverRes.email !=""){
+    navigate("/");
   }
 
 
@@ -68,9 +84,21 @@ function Login() {
 
       {/* <!-- 2 column grid layout for inline styling --> */}
       <div class="row mb-4">
-      <div class="col">
-          {/* <!-- Simple link --> */}
-          <a href="/adminlogin">Admin Login</a>
+        <div class="col d-flex justify-content-center">
+          {/* <!-- Checkbox --> */}
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="form2Example31"
+
+            />
+            <label class="form-check-label" for="form2Example31">
+              {" "}
+              Remember me{" "}
+            </label>
+          </div>
         </div>
 
         <div class="col">
