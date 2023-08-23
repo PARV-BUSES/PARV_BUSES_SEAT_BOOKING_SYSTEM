@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.GetPassengersDto;
 import com.app.dto.RemovePassengerDto;
 import com.app.entities.Passenger;
 import com.app.service.PassengerService;
@@ -33,5 +34,12 @@ public class PassengerController {
 	public String removePassenger(@RequestBody RemovePassengerDto rpd) {
 		return passService.removePassenger(rpd.getUserid(), rpd.getPassengerid());
 	}
+	
+	@GetMapping("/getpassengers/{userid}")
+	public List<GetPassengersDto> getPassengers(@PathVariable long userid){
+		
+		return passService.getAllPasssengers(userid);
+	}
+	
 
 }

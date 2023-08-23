@@ -2,6 +2,7 @@ package com.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,12 @@ public class RouteController {
 	public ResponseEntity<?> addRoute(@RequestBody AddRouteDto ard){
 		
 		return ResponseEntity.ok(routeService.addRoute(ard));
+	}
+	
+	@PostMapping("/deleteroute/{routeid}")
+	public ResponseEntity<?> addRoute(@PathVariable long routeid){
+		
+		return ResponseEntity.ok(routeService.deleteRoute(routeid));
 	}
 
 }

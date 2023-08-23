@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoggedInUserData {
 	
+	private long id;
 	private String firstname;
 	private String lastname;
 	private String mobile;

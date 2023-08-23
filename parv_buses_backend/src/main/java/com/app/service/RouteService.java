@@ -7,4 +7,6 @@ public interface RouteService {
 	
 	ApiResponse addRoute(AddRouteDto ard);
 
+	ApiResponse deleteRoute(long routeid);
+
 }

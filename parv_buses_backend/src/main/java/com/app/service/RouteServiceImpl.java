@@ -36,4 +36,10 @@ public class RouteServiceImpl implements RouteService {
 		return new ApiResponse("Route Added");
 	}
 
+	@Override
+	public ApiResponse deleteRoute(long routeid) {
+		routeDao.deleteById(routeid);
+		return new ApiResponse("Route Deleted Successfully");
+	}
+
 }
