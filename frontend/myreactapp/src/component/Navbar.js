@@ -12,6 +12,7 @@ import AdminHome from "./Admin/AdminHome";
 import MyBookings from "./MyBookings";
 import UserHome from "./UserHome";
 import SeatBookComp from "./SeatBookComp";
+import AdminLogin from "./Admin/AdminLogin";
 
 function Navbar() {
   var navigate = useNavigate();
@@ -117,6 +118,8 @@ function Navbar() {
         <Route exact path="/addstation" Component={AddStation}></Route>
         <Route exact path="/mybookings" Component={MyBookings}></Route>
         <Route exact path="/seatbook" Component={SeatBookComp}></Route>
+        <Route exact path="/adminlogin" Component={AdminLogin}></Route>
+
 
         
       </Routes>

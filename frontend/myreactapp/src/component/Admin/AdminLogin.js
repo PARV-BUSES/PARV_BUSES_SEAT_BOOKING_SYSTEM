@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 
 
 
-function Login() {
+function AdminLogin() {
 
   const [loginData, setLoginData] = useState({
 
@@ -27,7 +27,7 @@ function Login() {
 
   const handleLogin =() =>{
     axios
-    .post("http://localhost:8080/user/login",loginData)
+    .post("http://localhost:8080/admin",loginData)
     .then((res)=>
     console.log(res.data),console.log("signup sucessfull"))
     .catch((error)=>{
@@ -49,6 +49,7 @@ function Login() {
       width: 400, left: 480, top: 120, position: "absolute", padding: "15px",
       boxShadow: "10px 10px 10px 5px grey"
     }}>
+        <h3>Admin Login</h3>
       {/* <!-- Email input --> */}
       <div class="form-outline mb-4">
         <label class="form-label" for="form2Example1">
@@ -68,14 +69,10 @@ function Login() {
 
       {/* <!-- 2 column grid layout for inline styling --> */}
       <div class="row mb-4">
+        
       <div class="col">
           {/* <!-- Simple link --> */}
-          <a href="/adminlogin">Admin Login</a>
-        </div>
-
-        <div class="col">
-          {/* <!-- Simple link --> */}
-          <a href="#!">Forgot password?</a>
+          <a href="/login">Login As User</a>
         </div>
       </div>
 
@@ -84,29 +81,9 @@ function Login() {
         Sign in
       </button>
 
-      <div class="text-center">
-        <p>
-          Not a member? <Link to="/register">Register</Link>
-        </p>
-        {/* <p>or sign up with:</p>
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
-  
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
-  
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
-  
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button> */}
-      </div>
+      
     </form>
   )
 }
 
-export default Login;
+export default AdminLogin;
