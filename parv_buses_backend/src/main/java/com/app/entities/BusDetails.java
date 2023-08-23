@@ -1,6 +1,7 @@
 package com.app.entities;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class BusDetails extends Base {
 	private int busNo;
 	private int totalSeats;
 	private LocalDate date;
+	private LocalTime time;
 	@OneToMany(mappedBy = "busDetails")
     private List<SeatAvailability> seatAvailabilities;
 	
