@@ -10,6 +10,8 @@ import AddBus from "./Admin/AddBus";
 import DeleteBus from "./Admin/DeleteBus";
 import AdminHome from "./Admin/AdminHome";
 import MyBookings from "./MyBookings";
+import UserHome from "./UserHome";
+import SeatBookComp from "./SeatBookComp";
 
 function Navbar() {
   var navigate = useNavigate();
@@ -104,7 +106,7 @@ function Navbar() {
       </nav>
 
       <Routes>
-        <Route exact path="/" Component={Login}></Route>
+        <Route exact path="/" Component={UserHome}></Route>
         <Route exact path="/login" Component={Login}></Route>
         <Route exact path="/signup" Component={Signup}></Route>
         <Route exact path="/addbus" Component={AddBus}></Route>
@@ -114,6 +116,7 @@ function Navbar() {
         <Route exact path="/deleteroute" Component={DeleteRoute}></Route>
         <Route exact path="/addstation" Component={AddStation}></Route>
         <Route exact path="/mybookings" Component={MyBookings}></Route>
+        <Route exact path="/seatbook" Component={SeatBookComp}></Route>
 
         
       </Routes>
