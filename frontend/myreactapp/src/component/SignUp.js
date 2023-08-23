@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 function Signup() {
+
+  const navigate = useNavigate();
 
   const [signUpData,setSignUpData] = useState({
 
@@ -19,25 +21,37 @@ function Signup() {
 
   });
 
+  const [serverResp,setServerResp] = useState(false);
+
+
+  const handleSignupDataData = () =>{
+
+    // const apiUrl = "http://localhost:8080/user/signup";
+
+    // console.log(signUpData)
+
+    // debugger
+    // console.log(serverResp)
+    axios.post("http://localhost:8080/user/signup",signUpData)
+      .then((response)=>{setServerResp(response.data.status)})
+      .catch((error)=>console.log(error+"some error"))
+
+   
+
+  }
+
+  if(serverResp){
+    navigate("/login")
+  }
+
+
   const handleChange = (e) =>{
 
     var signUpDataCopy = {...signUpData};
     signUpDataCopy[e.target.name] = e.target.value;
-    console.log(signUpData)
+    // console.log(signUpData)
     setSignUpData(signUpDataCopy)
     
-  }
-
-  const handleSignupDataData = () =>{
-
-    const apiUrl = "http://localhost:8080/user/signup";
-
-    console.log(signUpData)
-
-    axios.post(apiUrl,signUpData)
-      .then((response)=>console.log(response.data))
-      .catch((error)=>console.log(error))
-
   }
 
 
@@ -159,7 +173,7 @@ function Signup() {
             Check me out
           </label>
         </div>
-        <button onClick={handleSignupDataData} type="submit" class="btn btn-primary">
+        <button onClick={handleSignupDataData} type="button" class="btn btn-primary">
           Register
         </button>
       </form>
