@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
 
 function BusComp(props) {
+
+  const setDataToSorage = () =>{
+
+    var busdata = JSON.stringify(props)
+    sessionStorage.setItem("busdata",busdata)
+
+  }
+
   return (
     <>
   
@@ -30,7 +38,7 @@ function BusComp(props) {
           <div class="col-sm">Available Seats:{props.data.availableSeats}</div>
           <div class="col-sm">Service Provider: Piyush Travels</div>
           <div class="col-sm">Price:{props.data.cost}</div>
-          <Link to="/seatbook"><div class="col-sm btn btn-primary btn-sm">select seat</div></Link>
+          <Link to="/seatbook"><div onClick={setDataToSorage} class="col-sm btn btn-primary btn-sm">select seat</div></Link>
         </div>
       </div>
 

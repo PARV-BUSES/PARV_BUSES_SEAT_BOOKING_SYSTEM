@@ -13,6 +13,7 @@ import com.app.dao.BookingsDao;
 import com.app.dao.BusDao;
 import com.app.dao.PassengerDao;
 import com.app.dao.RouteDao;
+import com.app.dao.SeatAllocationDao;
 import com.app.dao.SeatAvailabilityDao;
 import com.app.dao.StationDao;
 import com.app.dao.UserDao;
@@ -23,6 +24,7 @@ import com.app.entities.Bookings;
 import com.app.entities.BusDetails;
 import com.app.entities.Passenger;
 import com.app.entities.Routes;
+import com.app.entities.SeatAllocation;
 import com.app.entities.SeatAvailability;
 import com.app.entities.Station;
 import com.app.entities.User;
@@ -51,6 +53,8 @@ public class BookingServiceImpl implements BookingService {
 	
 	@Autowired
 	private SeatAvailabilityDao seatAvailabilityDao;
+	@Autowired
+	private SeatAllocationDao seatAllocationDao;
 	@Override
 	public ApiResponse createBooking(BookingsDto booking) {
 		
@@ -94,7 +98,9 @@ public class BookingServiceImpl implements BookingService {
 			Station start = stationDao.findById((long)booking.getStart()).orElseThrow(()->new RuntimeException("Start Station not found."));
 			Station end = stationDao.findById((long)booking.getEnd()).orElseThrow(()->new RuntimeException("End Station not found."));
 			Passenger p = booking.getPassenger();
-			GetBookingDto bookDto = new GetBookingDto(booking.getId(), booking.getBusNo(), start.getStation_name(),
+			SeatAllocation s=seatAllocationDao.findById(p.getId()).orElseThrow(()-> new RuntimeException("Not Fetch Passeneger"));
+			
+			GetBookingDto bookDto = new GetBookingDto(booking.getId(), s.getSeatNo(),p.getAge(),booking.getBusNo(), start.getStation_name(),
 					end.getStation_name(), p.getFirstName()+" "+p.getLastName(),booking.getDate());
 			
 			bookedDtolist.add(bookDto);

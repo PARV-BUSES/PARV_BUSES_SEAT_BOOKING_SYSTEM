@@ -1,5 +1,6 @@
 package com.app.dto;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SendBusDto {
 	
+	private LocalDate date;
 	private int busno;
 	private long id;
 	private LocalTime time;

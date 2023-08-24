@@ -48,7 +48,12 @@ public class BusSeviceImpl implements BusService {
 	public ApiResponse addBus(BusDetails abd,long routeid) {
 		Routes rv= routeDao.findById(routeid).orElseThrow(()->new RuntimeException("Route not found."));
 		rv.addBus(abd);
+		BusDetails b=busDao.save(abd);
 		SeatAvailability s=new SeatAvailability();
+		s.setAvailable_seats(30);
+		s.setDate(abd.getDate());
+		s.setBusDetails(b);
+		seatAvailabilityDao.save(s);
 		return new ApiResponse("bus added.");
 	}
 
@@ -93,7 +98,7 @@ public class BusSeviceImpl implements BusService {
 			String to1 = to.getStation_name();
 			SeatAvailability seat = seatAvailabilityDao.findByBusDetails(bus);
 			int seats = seat.getAvailable_seats();
-			SendBusDto sendbusobj = new SendBusDto(bus.getBusNo(),bus.getId(),bus.getTime(),from1, to1, cost, seats,duration);
+			SendBusDto sendbusobj = new SendBusDto(bus.getDate(),bus.getBusNo(),bus.getId(),bus.getTime(),from1, to1, cost, seats,duration);
 			sendBusDtoList.add(sendbusobj);
 		}
 		

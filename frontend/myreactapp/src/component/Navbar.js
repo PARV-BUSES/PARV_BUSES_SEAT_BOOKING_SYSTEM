@@ -95,6 +95,7 @@ function Navbar() {
               <a class="dropdown-item" href="#">
                 My Profile
               </a>
+
               <a class="dropdown-item" href="/changepassword">
                 Change Password
               </a>
@@ -110,7 +111,7 @@ function Navbar() {
       <Routes>
         <Route exact path="/" Component={UserHome}></Route>
         <Route exact path="/login" Component={Login}></Route>
-        <Route exact path="/signup" Component={Signup}></Route>
+        <Route exact path="/register" Component={Signup}></Route>
         <Route exact path="/addbus" Component={AddBus}></Route>
         <Route exact path="/adminhome" Component={AdminHome}></Route>
         <Route exact path="/deletebus" Component={DeleteBus}></Route>

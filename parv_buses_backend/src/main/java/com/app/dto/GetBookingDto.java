@@ -14,6 +14,8 @@ import lombok.Setter;
 public class GetBookingDto {
 	
 	private long id;
+	private int seatno;
+	private int age;
 	private int busNo;
 	private String start;
 	private String end;

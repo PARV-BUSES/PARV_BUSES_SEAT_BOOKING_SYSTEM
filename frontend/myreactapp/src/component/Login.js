@@ -52,11 +52,12 @@ function Login() {
     loginDataCopy[e.target.name] = e.target.value;
     // console.log(loginData);
     setLoginData(loginDataCopy);
-
   }
 
   if(serverRes.email !=""){
     navigate("/");
+    sessionStorage.setItem("userid",serverRes.id)
+    sessionStorage.setItem("userdet",JSON.stringify(serverRes))
   }
 
 

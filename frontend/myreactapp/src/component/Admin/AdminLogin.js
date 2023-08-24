@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // useEffect(() => {
 //   axios.post("http://localhost:8080/user/login")
@@ -15,6 +16,8 @@ import { useState, useEffect } from "react";
 
 
 function AdminLogin() {
+
+  const navigate = useNavigate()
 
   const [loginData, setLoginData] = useState({
 
@@ -33,6 +36,11 @@ function AdminLogin() {
     .catch((error)=>{
       console.log(error);
     })
+
+    if(loginData.email != ""){
+        sessionStorage.setItem("isAdmin",true)
+        navigate("/adminhome")
+    }
   }
 
   const handleChange = (e) => {
