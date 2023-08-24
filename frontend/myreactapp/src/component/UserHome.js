@@ -48,6 +48,8 @@ function UserHome() {
       .post("http://localhost:8080/bus/getbus", getBusData)
       .then((response) => setBuses(response.data))
       .catch((error) => console.log(error + "some error"));
+
+      console.log(getBusData)
   };
 
   // console.log(stationList);

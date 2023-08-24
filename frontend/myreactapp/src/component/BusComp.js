@@ -23,6 +23,7 @@ function BusComp(props) {
           <div class="col-sm">To:{props.data.to}</div>
           <div class="col-sm">Duration:{props.data.duration}</div>
           <div class="col-sm">Departure time:{props.data.time}</div>
+          <div class="col-sm">Bus No:{props.data.busno}</div>
           
         </div>
         <br/>
