@@ -98,7 +98,7 @@ public class BookingServiceImpl implements BookingService {
 			Station start = stationDao.findById((long)booking.getStart()).orElseThrow(()->new RuntimeException("Start Station not found."));
 			Station end = stationDao.findById((long)booking.getEnd()).orElseThrow(()->new RuntimeException("End Station not found."));
 			Passenger p = booking.getPassenger();
-			SeatAllocation s=seatAllocationDao.findById(p.getId()).orElseThrow(()-> new RuntimeException("Not Fetch Passeneger"));
+			SeatAllocation s=seatAllocationDao.findById(p.getId()).orElseThrow(()-> new RuntimeException("Seat not allocated"));
 			
 			GetBookingDto bookDto = new GetBookingDto(booking.getId(), s.getSeatNo(),p.getAge(),booking.getBusNo(), start.getStation_name(),
 					end.getStation_name(), p.getFirstName()+" "+p.getLastName(),booking.getDate());

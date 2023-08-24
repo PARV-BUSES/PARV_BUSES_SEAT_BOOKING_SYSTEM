@@ -14,6 +14,12 @@ import UserHome from "./UserHome";
 import SeatBookComp from "./SeatBookComp";
 import AdminLogin from "./Admin/AdminLogin";
 import ChangePassword from "./ChangePassword";
+import Passenger from "./PassengerDetails";
+import Profile from "./ProfilePage";
+import PassengerList from "./PassengerList";
+import FAQ from "./Faq";
+import AboutUs from "./AboutUs";
+import ContactUs from "./ContactUs";
 
 function Navbar() {
   var navigate = useNavigate();
@@ -40,44 +46,67 @@ function Navbar() {
             <Link to="/">
               <li class="nav-item active">
                 <a class="nav-link" href="#">
-                  Home <span class="sr-only">(current)</span>
+                  Home 
                 </a>
               </li>
             </Link>
-            <Link to="/adminhome">
+            {/* {
+              sessionStorage.getItem("userid")==null?<Link to="/adminhome">
               <li class="nav-item">
                 <a class="nav-link" href="#">
-                Admin</a>
-              </li>
-            </Link>
-
-            <Link to="/mybookings">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                 My Bookings
+                  Admin
                 </a>
               </li>
-            </Link>
+            </Link>:console.log()
+            } */}
 
-            <Link to="/signup">
+            <li class="nav-item dropdown" style={{ listStyle: "none" }}>
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+                Manage Bookings
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/mybookings">
+                  My Bookings
+                </a>
+
+                <a class="dropdown-item" href="/passenger">
+                  Passengers
+                </a>
+
+                <a class="dropdown-item" href="/">
+                  Book Ticket
+                </a>
+              </div>
+            </li>
+
+            <Link to="/register">
               <li class="nav-item">
                 <a class="nav-link " href="#">
                   Sign Up
                 </a>
               </li>
             </Link>
-            <Link to="/login">
+            {/* <Link to="/login">
               <li class="nav-item">
                 <a class="nav-link " href="#">
                   Login
                 </a>
               </li>
-            </Link>
+            </Link> */}
           </ul>
           <form class="form-inline my-2 my-lg-0">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            {
+              sessionStorage.getItem("userid") == null?<Link to="/login"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">
               LogIn
-            </button>
+            </button></Link>:console.log("user logged in")
+            }
           </form>
 
           <li class="nav-item dropdown" style={{ listStyle: "none" }}>
@@ -92,7 +121,7 @@ function Navbar() {
               Account
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/profile">
                 My Profile
               </a>
 
@@ -100,11 +129,11 @@ function Navbar() {
                 Change Password
               </a>
               {/* <div class="dropdown-divider"></div> */}
-              <a class="dropdown-item" href="#">
+              <a onClick={()=>{sessionStorage.clear();navigate("/")}} class="dropdown-item" href="#">
                 Logout
               </a>
             </div>
-            </li>
+          </li>
         </div>
       </nav>
 
@@ -122,8 +151,13 @@ function Navbar() {
         <Route exact path="/seatbook" Component={SeatBookComp}></Route>
         <Route exact path="/adminlogin" Component={AdminLogin}></Route>
         <Route exact path="/changepassword" Component={ChangePassword}></Route>
-
-     </Routes>
+        <Route exact path="/passenger" Component={Passenger}></Route>
+        <Route exact path="/profile" Component={Profile}></Route>
+        <Route exact path="/passlist" Component={PassengerList}></Route>
+        <Route exact path="/faq" Component={FAQ}></Route>
+        <Route exact path="/aboutus" Component={AboutUs}></Route>
+        <Route exact path="/contactus" Component={ContactUs}></Route>
+      </Routes>
     </div>
   );
 }
