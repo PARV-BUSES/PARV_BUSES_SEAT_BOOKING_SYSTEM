@@ -1,5 +1,6 @@
 package com.app.dto;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import lombok.*;
 @Getter
