@@ -13,6 +13,7 @@ import MyBookings from "./MyBookings";
 import UserHome from "./UserHome";
 import SeatBookComp from "./SeatBookComp";
 import AdminLogin from "./Admin/AdminLogin";
+import ChangePassword from "./ChangePassword";
 
 function Navbar() {
   var navigate = useNavigate();
@@ -94,7 +95,7 @@ function Navbar() {
               <a class="dropdown-item" href="#">
                 My Profile
               </a>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/changepassword">
                 Change Password
               </a>
               {/* <div class="dropdown-divider"></div> */}
@@ -119,10 +120,9 @@ function Navbar() {
         <Route exact path="/mybookings" Component={MyBookings}></Route>
         <Route exact path="/seatbook" Component={SeatBookComp}></Route>
         <Route exact path="/adminlogin" Component={AdminLogin}></Route>
+        <Route exact path="/changepassword" Component={ChangePassword}></Route>
 
-
-        
-      </Routes>
+     </Routes>
     </div>
   );
 }
