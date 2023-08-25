@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Seat(props) {
   const { seatNumber, isSelected, onSelectSeat } = props;
@@ -56,7 +58,7 @@ function SeatBookComp() {
     userId: userId,
     passengerId: selectedPass1,
     date: date,
-    seatNo:selectedSeat
+    seatNo: selectedSeat,
   };
 
   console.log(dataToBeSent);
@@ -81,10 +83,29 @@ function SeatBookComp() {
   }, []);
 
   const handleSubmit = () => {
-    axios
-      .post("http://localhost:8080/bookings/book", dataToBeSent)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+    if (dataToBeSent.passengerId == 0) {
+      toast("Please select the passenger..");
+    } else if (dataToBeSent.seatNo == null) {
+      toast("Please select the seat..");
+    } else {
+      axios
+        .post("http://localhost:8080/bookings/book", dataToBeSent)
+        .then((response) => {console.log(response);
+            if(response.data.message == "Booking Succesful."){
+              toast("Ticket is booked..")
+            }
+        })
+        .catch((error) => console.log(error));
+      axios
+        .post("http://localhost:8080/seats/seatbooking", dataToBeSent)
+        .then((response) => {console.log(response);
+          if(response.data.message == "Booking Succesful."){
+            toast("Seat allocated succesfully..")
+          }
+          console.log("in seat booking")
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   return (
@@ -122,7 +143,7 @@ function SeatBookComp() {
         </div>
         <hr />
       </div>
-
+      <ToastContainer />
       <div class="form-group" style={{ width: "20%", margin: "0 auto" }}>
         <label for="exampleInputPassword1">Select Passenger</label>
         <select
@@ -162,7 +183,7 @@ function SeatBookComp() {
       </div>
 
       <button onClick={handleSubmit} className="btn btn-success">
-        Book Seat
+        Pay & Book Seat
       </button>
     </>
   );

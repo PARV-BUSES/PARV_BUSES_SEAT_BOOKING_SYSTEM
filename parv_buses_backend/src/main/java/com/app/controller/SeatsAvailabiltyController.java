@@ -20,10 +20,10 @@ import com.app.service.SeatAvailabilityService;
 public class SeatsAvailabiltyController {
 	@Autowired
 	private SeatAvailabilityService seatAvailability;
-	@PostMapping("/seatbooking/{seatnos}")
-	public ResponseEntity<?> seatAvailable(@RequestBody SeatAvailabilityDto seats,@PathVariable int seatnos)
+	@PostMapping("/seatbooking")
+	public ResponseEntity<?> seatAvailable(@RequestBody SeatAvailabilityDto seats)
 	{
-	   return ResponseEntity.ok(seatAvailability.deductseats(seats,seatnos));	
+	   return ResponseEntity.ok(seatAvailability.deductseats(seats));	
 	}
 
 }

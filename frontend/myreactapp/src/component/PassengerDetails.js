@@ -3,6 +3,8 @@ import axios from "axios";
 import Message from "./Message";
 import { useNavigate } from "react-router-dom";
 import PassengerList from "./PassengerList";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Passenger() {
   const navigate = useNavigate();
@@ -23,25 +25,35 @@ function Passenger() {
   };
 
   function handlePassenger() {
-    axios
-      .post(
-        `http://localhost:8080/passenger/addpassenger/${sessionStorage.getItem(
-          "userid"
-        )}`,
-        passenger
-      )
-      .then((res) => {
-        setServerResp(res.data);
-        // console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (
+      passenger.age <1 ||
+      passenger.firstName == "" ||
+      passenger.gender == ""
+    ) {
+      toast("Please fill all the details..");
+    } else {
+      axios
+        .post(
+          `http://localhost:8080/passenger/addpassenger/${sessionStorage.getItem(
+            "userid"
+          )}`,
+          passenger
+        )
+        .then((res) => {
+          setServerResp(res.data);
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-      window.location.reload()
+      toast("Passenger added succesfully");
+      const timeoutId = setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+      return () => clearTimeout(timeoutId);
+    }
   }
-
-  
 
   if (sessionStorage.getItem("userid") != null) {
     return (
@@ -124,13 +136,13 @@ function Passenger() {
               Cancel
             </button>
           </form>
-         <PassengerList/>
-          
+          <ToastContainer />
+          <PassengerList />
         </div>
       </>
     );
   } else {
-    navigate("/login")
+    navigate("/login");
   }
 }
 

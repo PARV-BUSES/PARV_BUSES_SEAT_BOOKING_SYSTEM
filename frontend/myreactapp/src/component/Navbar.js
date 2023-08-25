@@ -46,7 +46,7 @@ function Navbar() {
             <Link to="/">
               <li class="nav-item active">
                 <a class="nav-link" href="#">
-                  Home 
+                  Home
                 </a>
               </li>
             </Link>
@@ -86,13 +86,17 @@ function Navbar() {
               </div>
             </li>
 
-            <Link to="/register">
-              <li class="nav-item">
-                <a class="nav-link " href="#">
-                  Sign Up
-                </a>
-              </li>
-            </Link>
+            {sessionStorage.getItem("userid") == null ? (
+              <Link to="/register">
+                <li class="nav-item">
+                  <a class="nav-link " href="#">
+                    Sign Up
+                  </a>
+                </li>
+              </Link>
+            ) : (
+              console.log()
+            )}
             {/* <Link to="/login">
               <li class="nav-item">
                 <a class="nav-link " href="#">
@@ -102,11 +106,17 @@ function Navbar() {
             </Link> */}
           </ul>
           <form class="form-inline my-2 my-lg-0">
-            {
-              sessionStorage.getItem("userid") == null?<Link to="/login"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-              LogIn
-            </button></Link>:console.log("user logged in")
-            }
+            {sessionStorage.getItem("userid") == null ? (
+              <Link to="/login">
+                <button
+                  class="btn btn-outline-success my-2 my-sm-0"
+                  type="submit">
+                  LogIn
+                </button>
+              </Link>
+            ) : (
+              console.log("user logged in")
+            )}
           </form>
 
           <li class="nav-item dropdown" style={{ listStyle: "none" }}>
@@ -128,8 +138,14 @@ function Navbar() {
               <a class="dropdown-item" href="/changepassword">
                 Change Password
               </a>
-              
-              <a onClick={()=>{sessionStorage.clear();navigate("/")}} class="dropdown-item" href="#">
+
+              <a
+                onClick={() => {
+                  sessionStorage.clear();
+                  navigate("/");
+                }}
+                class="dropdown-item"
+                href="#">
                 Logout
               </a>
             </div>

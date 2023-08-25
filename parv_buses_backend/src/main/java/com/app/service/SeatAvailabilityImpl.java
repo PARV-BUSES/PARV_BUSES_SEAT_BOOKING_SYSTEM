@@ -24,11 +24,11 @@ public class SeatAvailabilityImpl implements SeatAvailabilityService{
 	@Autowired 
 	private BusDao busDao;
 	@Override
-	public ApiResponse deductseats(SeatAvailabilityDto seats, int seatno) {
+	public ApiResponse deductseats(SeatAvailabilityDto seats) {
         BusDetails bus=	busDao.findByBusNoAndDate(seats.getBusNo(),seats.getDate()).orElseThrow(() -> new RuntimeException("Bus Not Found"));
         SeatAvailability s=seatAvailabilityDao.findByBusDetails(bus);
 //        System.out.println(s.toString());
-        int seat=s.getAvailable_seats()-seatno;
+        int seat=s.getAvailable_seats()-1;
         s.setAvailable_seats(seat);
         seatAvailabilityDao.save(s);
         return new ApiResponse("booking succesful.");

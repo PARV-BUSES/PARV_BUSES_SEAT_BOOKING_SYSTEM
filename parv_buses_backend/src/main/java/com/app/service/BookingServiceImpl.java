@@ -103,7 +103,7 @@ public class BookingServiceImpl implements BookingService {
 //		sai.allocateSeat(seatAllocationRequestDto);
 		
 		SeatAllocation seat = new SeatAllocation(b1, booking.getSeatNo(), p, booking.getDate());
-		
+		//seat.setBooking(b1); //added
 		seatAllocationDao.save(seat);
 		
 	    return new ApiResponse("Booking Succesful.");
@@ -134,23 +134,26 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public ApiResponse cancelBookings(long bookingid) {
 		Bookings b=bookingDao.findById(bookingid).orElseThrow(()-> new RuntimeException("Booking Not Found"));
-		b.setUser(null);
-		b.setPassenger(null);
-		b.setRoutes(null);
 		
 		SeatAllocation seat = seatAllocationDao.findByBooking(b);
 		if(seat != null) {
 			seat.setBooking(null);
 			seat.setPassenger(null);
+			System.out.println(seat.getSeatNo());
+			b.removeSeat(seat);
 			seatAllocationDao.delete(seat);
 			System.out.println(seat.getId());
 		}
 		
-		//b.removeSeat(null); //Pending Work
-//		BusDetails bus=busDao.findByBusNoAndDate(b.getBusNo(), b.getDate()).orElseThrow(()-> new RuntimeException("Bus Not Found"));
-//		SeatAvailability s=seatAvailabilityDao.findByBusDetailsAndDate(bus, b.getDate());
-//		s.setAvailable_seats(s.getAvailable_seats()-1);
-//		bookingDao.delete(b);
+        BusDetails bus=busDao.findByBusNoAndDate(b.getBusNo(), b.getDate()).orElseThrow(()-> new RuntimeException("Bus Not Found"));
+        System.out.println(bus.getId());
+		SeatAvailability s=seatAvailabilityDao.findByBusDetailsAndDate(bus, b.getDate());
+		System.out.println(s.getId());
+		s.setAvailable_seats(s.getAvailable_seats()+1);
+		b.setUser(null);
+		b.setPassenger(null);
+		b.setRoutes(null);
+		bookingDao.delete(b);
 		return new ApiResponse("Booking Cancel");
 	}
 }

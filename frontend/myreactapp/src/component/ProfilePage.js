@@ -2,54 +2,60 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Profile() {
-
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const [userData, setUserData] = useState([]);
 
-  const [user,setuser] = useState({
-    id:0,
+  const [user, setuser] = useState({
+    id: 0,
     firstname: "",
     lastname: "",
     mobile: "",
     email: "",
     age: 0,
-    gender: ""
-  })
+    gender: "",
+  });
   useEffect(() => {
-    if(sessionStorage.getItem("userdet") !=null){
-        const userDataString = sessionStorage.getItem("userdet")
-        console.log(userDataString)
-        setUserData(JSON.parse(userDataString))
-    }else{
-        navigate("/login")
+    if (sessionStorage.getItem("userdet") != null) {
+      const userDataString = sessionStorage.getItem("userdet");
+      console.log(userDataString);
+      setUserData(JSON.parse(userDataString));
+    } else {
+      navigate("/login");
     }
-    
-    
-    
   }, []);
-  
 
   const handleEditProfile = (e) => {
     const updatedProfile = {
       id: document.getElementById("cid").value,
       firstname: document.getElementById("firstname").value,
       lastname: document.getElementById("lastname").value,
-      gender: document.getElementById("gender").value,
-      email: document.getElementById("email").value,
       mobile: document.getElementById("mobile").value,
+      email: document.getElementById("email").value,
       age: document.getElementById("age").value,
+      gender: document.getElementById("gender").value,
     };
-    axios.put(`http://localhost:8080/user/updateprofile/${userData.id}`, updatedProfile)
-  .then((resp) => {
-    console.log("Profile Updated:", resp.data);
-    sessionStorage.setItem("userdet",JSON.stringify(resp.data))
-  })
-  .catch((error) => {
-    console.log("Error updating profile:", error);
-  });
 
+    if (updatedProfile.gender == "") {
+      toast("Please select the gender");
+    } else {
+      axios
+        .put(
+          `http://localhost:8080/user/updateprofile/${userData.id}`,
+          updatedProfile
+        )
+        .then((resp) => {
+          console.log("Profile Updated:", resp.data);
+          sessionStorage.setItem("userdet", JSON.stringify(resp.data));
+          toast("Profile updated succesfully.");
+        })
+        .catch((error) => {
+          console.log("Error updating profile:", error);
+        });
+    }
   };
 
   return (
@@ -63,16 +69,14 @@ function Profile() {
           boxShadow: "10px 10px 10px 5px grey",
           padding: "20px",
           marginTop: "10px",
-        }}
-       
-      >
+        }}>
         <div className="form-group">
           <label htmlFor="cid">Customer Id</label>
           <input
             type="text"
             className="form-control"
             id="cid"
-           defaultValue={userData.id}
+            defaultValue={userData.id}
             aria-describedby="emailHelp"
             readOnly
           />
@@ -101,7 +105,10 @@ function Profile() {
 
         <div className="form-group">
           <label htmlFor="gender">Gender</label>
-          <select className="form-control" id="gender" defaultValue={userData.gender} >
+          <select
+            className="form-control"
+            id="gender"
+            defaultValue={userData.gender}>
             <option value="" key="0">
               SELECT
             </option>
@@ -132,7 +139,7 @@ function Profile() {
             type="number"
             className="form-control"
             id="mobile"
-           defaultValue={userData.mobile}
+            defaultValue={userData.mobile}
           />
         </div>
         <div className="form-group">
@@ -144,9 +151,13 @@ function Profile() {
             defaultValue={userData.age}
           />
         </div>
-        <button type="button" onClick={handleEditProfile} className="btn btn-success">
+        <button
+          type="button"
+          onClick={handleEditProfile}
+          className="btn btn-success">
           Update Profile
         </button>
+        <ToastContainer />
       </form>
     </>
   );

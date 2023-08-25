@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // useEffect(() => {
 //   axios.post("http://localhost:8080/user/login")
@@ -9,70 +11,70 @@ import { useNavigate } from "react-router-dom";
 
 // }, [])
 
-
-
-
-
-
-
 function Login() {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
-
     email: "",
-    password: ""
+    password: "",
+  });
 
-
-  })
-
-  const [serverRes,setServerRes] = useState({
-    id:0,
+  const [serverRes, setServerRes] = useState({
+    id: 0,
     firstname: "",
     lastname: "",
     mobile: "",
     email: "",
     age: 0,
-    gender: ""
-  })
+    gender: "",
+  });
 
-
-
-  const handleLogin =() =>{
+  const handleLogin = () => {
     axios
-    .post("http://localhost:8080/user/login",loginData)
-    .then((res)=> setServerRes(res.data))
-    //console.log(res.data),console.log("signup sucessfull"))
-    .catch((error)=>{
-      console.log(error);
-    })
-  }
+      .post("http://localhost:8080/user/login", loginData)
+      .then((res) => {setServerRes(res.data);console.log(res.status)})
+      .catch((error) => {
+        console.log(error.response.status);
+        toast("Please enter valid credentials..")
+      });
+  };
 
   const handleChange = (e) => {
     var loginDataCopy = { ...loginData };
     loginDataCopy[e.target.name] = e.target.value;
     // console.log(loginData);
     setLoginData(loginDataCopy);
-  }
+  };
 
-  if(serverRes.email !=""){
+  if (serverRes.email != "") {
+    sessionStorage.setItem("isLoggedIn", "true");
     navigate("/");
-    sessionStorage.setItem("userid",serverRes.id)
-    sessionStorage.setItem("userdet",JSON.stringify(serverRes))
+    sessionStorage.setItem("userid", serverRes.id);
+    sessionStorage.setItem("userdet", JSON.stringify(serverRes));
   }
-
 
   return (
-    <form style={{
-      width: 400, left: 480, top: 120, position: "absolute", padding: "15px",
-      boxShadow: "10px 10px 10px 5px grey"
-    }}>
+    <form
+      style={{
+        width: 400,
+        left: 480,
+        top: 120,
+        position: "absolute",
+        padding: "15px",
+        boxShadow: "10px 10px 10px 5px grey",
+      }}>
       {/* <!-- Email input --> */}
       <div class="form-outline mb-4">
         <label class="form-label" for="form2Example1">
           Email address
         </label>
-        <input type="email" name="email" value={loginData.email} onChange={handleChange} id="email" class="form-control" />
-
+        <input
+          type="email"
+          name="email"
+          value={loginData.email}
+          onChange={handleChange}
+          id="email"
+          class="form-control"
+        />
       </div>
 
       {/* <!-- Password input --> */}
@@ -80,13 +82,19 @@ function Login() {
         <label class="form-label" for="form2Example2">
           Password
         </label>
-        <input type="password" name="password" value={loginData.password} onChange={handleChange} id="password" class="form-control" />
+        <input
+          type="password"
+          name="password"
+          value={loginData.password}
+          onChange={handleChange}
+          id="password"
+          class="form-control"
+        />
       </div>
 
       {/* <!-- 2 column grid layout for inline styling --> */}
       <div class="row mb-4">
-       
-      <div class="col">
+        <div class="col">
           {/* <!-- Simple link --> */}
           <a href="/adminlogin">Admin Login</a>
         </div>
@@ -98,33 +106,23 @@ function Login() {
       </div>
 
       {/* <!-- Submit button --> */}
-      <button type="button"  onClick={handleLogin} class="btn btn-primary btn-block mb-4">
+      <button
+        type="button"
+        onClick={handleLogin}
+        class="btn btn-primary btn-block mb-4">
         Sign in
       </button>
+      <ToastContainer/>
 
       <div class="text-center">
         <p>
           Not a member? <Link to="/register">Register</Link>
         </p>
-        {/* <p>or sign up with:</p>
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
-  
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
-  
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
-  
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button> */}
+       
       </div>
+      
     </form>
-  )
+  );
 }
 
 export default Login;

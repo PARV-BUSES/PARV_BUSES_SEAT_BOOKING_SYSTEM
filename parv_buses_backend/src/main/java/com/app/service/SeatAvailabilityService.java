@@ -6,6 +6,6 @@ import com.app.entities.SeatAvailability;
 
 public interface SeatAvailabilityService {
 
-	ApiResponse deductseats(SeatAvailabilityDto seats, int seatno);
+	ApiResponse deductseats(SeatAvailabilityDto seats);
 
 }

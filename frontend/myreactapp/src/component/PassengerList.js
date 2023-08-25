@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Button } from 'react-bootstrap';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function PassengerList() {
   const [passengers, setPassengers] = useState([]);
@@ -32,6 +34,7 @@ function PassengerList() {
             prevPassengers.filter((passenger) => passenger.id !== id)
           );
           console.log(`Removed passenger with ID: ${id}`);
+          toast("Passenger Removed succesfully..")
         }
       })
       .catch((error) => {
@@ -67,6 +70,7 @@ function PassengerList() {
             ))}
           </tbody>
         </Table>
+        <ToastContainer/>
       </div>
     </div>
   );
