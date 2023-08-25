@@ -20,6 +20,7 @@ import PassengerList from "./PassengerList";
 import FAQ from "./Faq";
 import AboutUs from "./AboutUs";
 import ContactUs from "./ContactUs";
+import AdminSideNav from "./Admin/sidenav";
 
 function Navbar() {
   var navigate = useNavigate();
@@ -60,33 +61,38 @@ function Navbar() {
             </Link>:console.log()
             } */}
 
-            <li class="nav-item dropdown" style={{ listStyle: "none" }}>
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false">
-                Manage Bookings
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/mybookings">
-                  My Bookings
+            {sessionStorage.getItem("userid") != null ? (
+              <li class="nav-item dropdown" style={{ listStyle: "none" }}>
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false">
+                  Manage Bookings
                 </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/mybookings">
+                    My Bookings
+                  </a>
 
-                <a class="dropdown-item" href="/passenger">
-                  Passengers
-                </a>
+                  <a class="dropdown-item" href="/passenger">
+                    Passengers
+                  </a>
 
-                <a class="dropdown-item" href="/">
-                  Book Ticket
-                </a>
-              </div>
-            </li>
+                  <a class="dropdown-item" href="/">
+                    Book Ticket
+                  </a>
+                </div>
+              </li>
+            ) : (
+              console.log()
+            )}
 
-            {sessionStorage.getItem("userid") == null ? (
+            {sessionStorage.getItem("userid") == null &&
+            sessionStorage.getItem("isAdmin") == null ? (
               <Link to="/register">
                 <li class="nav-item">
                   <a class="nav-link " href="#">
@@ -106,7 +112,8 @@ function Navbar() {
             </Link> */}
           </ul>
           <form class="form-inline my-2 my-lg-0">
-            {sessionStorage.getItem("userid") == null ? (
+            {sessionStorage.getItem("userid") == null &&
+            sessionStorage.getItem("isAdmin") == null ? (
               <Link to="/login">
                 <button
                   class="btn btn-outline-success my-2 my-sm-0"
@@ -152,6 +159,8 @@ function Navbar() {
           </li>
         </div>
       </nav>
+
+      {sessionStorage.getItem("isAdmin") == "true" && <AdminSideNav />}
 
       <Routes>
         <Route exact path="/" Component={UserHome}></Route>

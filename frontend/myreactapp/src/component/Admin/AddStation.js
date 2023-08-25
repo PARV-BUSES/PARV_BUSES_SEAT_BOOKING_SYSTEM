@@ -1,7 +1,12 @@
 import React, { useState } from "react"; // Import React and useState
 import axios from "axios";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddStation() {
+  const navigate = useNavigate();
   const [stationName, setStationName] = useState(""); // Use camelCase for variable name
 
   const handleChange = (e) => {
@@ -12,18 +17,27 @@ function AddStation() {
     // Check if stationName is not empty before making the POST request
     if (stationName.trim() === "") {
       console.log("Station name cannot be empty.");
-      return;
+      toast("Please enter valid station");
+    } else {
+      axios
+        .post("http://localhost:8080/station/addstation", { stationName }) // Send the station name as an object
+        .then((resp) => {
+          console.log(resp.data);
+          if(resp.data.message == "Station added Successfully"){
+            toast("Station added succesfully.")
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-
-    axios
-      .post("http://localhost:8080/station/addstation", { stationName }) // Send the station name as an object
-      .then((resp) => {
-        console.log(resp.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
+
+  useEffect(() => {
+    if (sessionStorage.getItem("isAdmin") != "true") {
+      navigate("/adminlogin");
+    }
+  }, []);
 
   return (
     <>
@@ -35,8 +49,7 @@ function AddStation() {
           boxShadow: "10px 10px 10px 5px grey",
           padding: "20px",
           marginTop: "10px",
-        }}
-      >
+        }}>
         <div className="form-group">
           <label htmlFor="exampleInputStation">Station Name</label>
           <input
@@ -50,14 +63,11 @@ function AddStation() {
           />
         </div>
 
-        <button
-          type="button"
-          onClick={addStation}
-          className="btn btn-primary"
-        >
+        <button type="button" onClick={addStation} className="btn btn-primary">
           Add Station
         </button>
       </form>
+      <ToastContainer />
     </>
   );
 }

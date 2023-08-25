@@ -121,9 +121,9 @@ public class BookingServiceImpl implements BookingService {
 			Station start = stationDao.findById((long)booking.getStart()).orElseThrow(()->new RuntimeException("Start Station not found."));
 			Station end = stationDao.findById((long)booking.getEnd()).orElseThrow(()->new RuntimeException("End Station not found."));
 			Passenger p = booking.getPassenger();
-			SeatAllocation s=seatAllocationDao.findById(p.getId()).orElseThrow(()-> new RuntimeException("Seat not allocated"));
+			SeatAllocation s=seatAllocationDao.findById(booking.getId()).orElseThrow(()-> new RuntimeException("Seat not allocated"));
 			
-			GetBookingDto bookDto = new GetBookingDto(booking.getId(), s.getSeatNo(),p.getAge(),booking.getBusNo(), start.getStationName(),
+			GetBookingDto bookDto = new GetBookingDto(booking.getId(),s.getSeatNo(),p.getAge(),booking.getBusNo(), start.getStationName(),
 					end.getStationName(), p.getFirstName()+" "+p.getLastName(),booking.getDate());
 			
 			bookedDtolist.add(bookDto);
@@ -153,7 +153,7 @@ public class BookingServiceImpl implements BookingService {
 		b.setUser(null);
 		b.setPassenger(null);
 		b.setRoutes(null);
-		bookingDao.delete(b);
+		System.out.println(b.getId());
 		return new ApiResponse("Booking Cancel");
 	}
 }
