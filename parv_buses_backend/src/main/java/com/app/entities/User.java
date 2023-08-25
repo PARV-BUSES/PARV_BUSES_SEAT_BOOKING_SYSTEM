@@ -3,9 +3,14 @@ package com.app.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.Length;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,10 +26,17 @@ public class User extends Base {
 	
 	private String firstname;
 	private String lastname;
+	
+	@Column(unique = true) 
 	private String mobile;
+	
+	@Column(unique = true) 
+	@Email(message = "Please provide a valid email address")
 	private String email;
 	private int age;
 	private String gender;
+	
+	@Length(min = 7,max = 12)
 	private String password;
 	
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
