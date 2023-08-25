@@ -18,8 +18,11 @@ import com.app.entities.SeatAllocation;
 @Transactional
 public class SeatAllocationImpl implements SeatAllocationService{
 
+//	@Autowired
+//	private SeatAllocationDao seatAllocateDao;
+	
 	@Autowired
-	private SeatAllocationDao seatAllocateDao;
+	private SeatAllocationDao s;
 	
 	@Autowired
 	private PassengerDao passengerDao;
@@ -31,15 +34,19 @@ public class SeatAllocationImpl implements SeatAllocationService{
 	public ApiResponse allocateSeat(SeatAllocationRequestDto seat) {
 		SeatAllocation seatAllocation=new SeatAllocation();
 		seatAllocation.setDateOfJourney(seat.getDateOfJourney());
-		System.out.println(seat.getPassenegerId());
-		System.out.println(seat.getBookingId());
+//		System.out.println(seat.getPassenegerId());
+//		System.out.println(seat.getBookingId());
 		seatAllocation.setSeatNo(seat.getSeatNo());
-		Passenger p=passengerDao.findById(seat.getPassenegerId()).orElseThrow(()-> new RuntimeException("Passenger Not Found"));
-		Bookings book=bookingDao.findById(seat.getBookingId()).orElseThrow(()-> new RuntimeException("Booking Not Found"));
-		seatAllocation.setBooking(book);
-		seatAllocation.setPassenger(p);
-		book.addSeat(seatAllocation);
-		seatAllocateDao.save(seatAllocation);
+		System.out.println(seat.getPasseneger().getFirstName());
+//		Passenger p=passengerDao.findById(seat.getPassenegerId()).orElseThrow(()-> new RuntimeException("Passenger Not Found"));
+//		Bookings book=bookingDao.findById(seat.getBookingId()).orElseThrow(()-> new RuntimeException("Booking Not Found"));
+		seatAllocation.setBooking(seat.getBooking());
+		seatAllocation.setPassenger(seat.getPasseneger());
+		
+//		book.addSeat(seatAllocation);
+		seat.getBooking().addSeat(seatAllocation);
+//		seatAllocateDao.save(seatAllocation);
+		s.save(seatAllocation);
 		return new ApiResponse("Seat Allocated");
 	}
 

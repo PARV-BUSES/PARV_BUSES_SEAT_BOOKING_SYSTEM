@@ -28,8 +28,8 @@ public class RouteServiceImpl implements RouteService {
 		Station from = stationDao.findById(ard.getStationIdFrom()).orElseThrow(()->new RuntimeException("Station not found."));
 		Station to = stationDao.findById(ard.getStationIdTo()).orElseThrow(()->new RuntimeException("Station not found."));
 		Routes r = new Routes();
-		r.setStation_id_boarding(from);
-		r.setStation_id_destination(to);
+		r.setStationIdBoarding(from);
+		r.setStationIdDestination(to);
 		r.setDistance(ard.getDistance());
 		
 		Routes r1 = routeDao.save(r);

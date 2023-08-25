@@ -35,7 +35,7 @@ function BusComp(props) {
         </div>
         <br/>
         <div class="row">
-          <div class="col-sm">Available Seats:{props.data.availableSeats}</div>
+          <div class="col-sm">date:{props.data.date}</div>
           <div class="col-sm">Service Provider: Piyush Travels</div>
           <div class="col-sm">Price:{props.data.cost}</div>
           <Link to="/seatbook"><div onClick={setDataToSorage} class="col-sm btn btn-primary btn-sm">select seat</div></Link>

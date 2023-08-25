@@ -2,7 +2,7 @@ import React, { useState } from "react"; // Import React and useState
 import axios from "axios";
 
 function AddStation() {
-  const [station_name, setStationName] = useState(""); // Use camelCase for variable name
+  const [stationName, setStationName] = useState(""); // Use camelCase for variable name
 
   const handleChange = (e) => {
     setStationName(e.target.value); // Corrected the state setter function
@@ -10,13 +10,13 @@ function AddStation() {
 
   const addStation = () => {
     // Check if stationName is not empty before making the POST request
-    if (station_name.trim() === "") {
+    if (stationName.trim() === "") {
       console.log("Station name cannot be empty.");
       return;
     }
 
     axios
-      .post("http://localhost:8080/station/addstation", { station_name }) // Send the station name as an object
+      .post("http://localhost:8080/station/addstation", { stationName }) // Send the station name as an object
       .then((resp) => {
         console.log(resp.data);
       })
@@ -42,7 +42,7 @@ function AddStation() {
           <input
             type="text"
             className="form-control"
-            value={station_name}
+            value={stationName}
             onChange={handleChange}
             name="stationName"
             id="stationname"

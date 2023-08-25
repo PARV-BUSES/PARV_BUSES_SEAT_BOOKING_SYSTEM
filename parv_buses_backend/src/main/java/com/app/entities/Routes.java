@@ -25,11 +25,11 @@ public class Routes extends Base{
 
 	@ManyToOne
 //    @JoinColumn(name = "station_id_boarding")
-    private Station station_id_boarding;
+    private Station stationIdBoarding;
 
     @ManyToOne
   //  @JoinColumn(name = "station_id_destination")
-    private Station station_id_destination;
+    private Station stationIdDestination;
 
     private double distance;
     

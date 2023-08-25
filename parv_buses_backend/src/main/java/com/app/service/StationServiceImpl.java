@@ -37,7 +37,7 @@ public class StationServiceImpl implements StationService {
 	    for (Station entity : entityList) {
 	        GetStationsDto dto = new GetStationsDto();
 	        dto.setId(entity.getId());
-	        dto.setStation_name(entity.getStation_name());
+	        dto.setStation_name(entity.getStationName());
 	        // Map other properties
 	        
 	        dtoList.add(dto);

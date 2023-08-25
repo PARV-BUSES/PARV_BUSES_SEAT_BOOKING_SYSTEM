@@ -20,6 +20,7 @@ import com.app.dao.UserDao;
 import com.app.dto.ApiResponse;
 import com.app.dto.BookingsDto;
 import com.app.dto.GetBookingDto;
+import com.app.dto.SeatAllocationRequestDto;
 import com.app.entities.Bookings;
 import com.app.entities.BusDetails;
 import com.app.entities.Passenger;
@@ -66,14 +67,27 @@ public class BookingServiceImpl implements BookingService {
 		User u = userDao.findById(booking.getUserId()).
 				orElseThrow(()->new RuntimeException("User Not found"));
 		
-		Routes r = routeDao.findById(booking.getRoutesId()).
-				orElseThrow(()->new RuntimeException("Route Not Found"));
+//		Routes r = routeDao.findById(booking.getRoutesId()).
+//				orElseThrow(()->new RuntimeException("Route Not Found"));
 		
+//		System.out.println(booking.getSeatNo());
+		
+		
+		
+		Station start = stationDao.findByStationName(booking.getStart()).orElseThrow(()->new RuntimeException("start station not found."));
+		Station end = stationDao.findByStationName(booking.getEnd()).orElseThrow(()->new RuntimeException("End station not found"));
+		
+		Routes r = routeDao.findByStationIdBoardingAndStationIdDestination(start, end).orElseThrow(()->new RuntimeException("Route not found"));
+		
+		
+//		if (start.getId() >= Integer.MIN_VALUE && start.getId() <= Integer.MAX_VALUE) {
+//		    int intValue = Integer.valueOf(String.valueOf(start.getId())); // Casting to int
+//		}
 		
 		Bookings b = new Bookings();
 		b.setDate(booking.getDate());
-		b.setEnd(booking.getEnd());
-		b.setStart(booking.getStart());
+		b.setEnd(Integer.valueOf(String.valueOf(end.getId())));
+		b.setStart(Integer.valueOf(String.valueOf(start.getId())));
 		b.setBusNo(booking.getBusNo());
 		b.setPassenger(p);
 		p.addBooking(b);
@@ -83,6 +97,15 @@ public class BookingServiceImpl implements BookingService {
 		r.addBooking(b);
 		
 		Bookings b1 = bookingDao.save(b);
+//		System.out.println(b1.getId());
+//		SeatAllocationImpl sai = new SeatAllocationImpl();
+//		SeatAllocationRequestDto seatAllocationRequestDto = new SeatAllocationRequestDto(booking.getSeatNo(), booking.getDate(), p, b1);
+//		sai.allocateSeat(seatAllocationRequestDto);
+		
+		SeatAllocation seat = new SeatAllocation(b1, booking.getSeatNo(), p, booking.getDate());
+		
+		seatAllocationDao.save(seat);
+		
 	    return new ApiResponse("Booking Succesful.");
 	 		
 }
@@ -100,8 +123,8 @@ public class BookingServiceImpl implements BookingService {
 			Passenger p = booking.getPassenger();
 			SeatAllocation s=seatAllocationDao.findById(p.getId()).orElseThrow(()-> new RuntimeException("Seat not allocated"));
 			
-			GetBookingDto bookDto = new GetBookingDto(booking.getId(), s.getSeatNo(),p.getAge(),booking.getBusNo(), start.getStation_name(),
-					end.getStation_name(), p.getFirstName()+" "+p.getLastName(),booking.getDate());
+			GetBookingDto bookDto = new GetBookingDto(booking.getId(), s.getSeatNo(),p.getAge(),booking.getBusNo(), start.getStationName(),
+					end.getStationName(), p.getFirstName()+" "+p.getLastName(),booking.getDate());
 			
 			bookedDtolist.add(bookDto);
 		}
@@ -112,6 +135,17 @@ public class BookingServiceImpl implements BookingService {
 	public ApiResponse cancelBookings(long bookingid) {
 		Bookings b=bookingDao.findById(bookingid).orElseThrow(()-> new RuntimeException("Booking Not Found"));
 		b.setUser(null);
+		b.setPassenger(null);
+		b.setRoutes(null);
+		
+		SeatAllocation seat = seatAllocationDao.findByBooking(b);
+		if(seat != null) {
+			seat.setBooking(null);
+			seat.setPassenger(null);
+			seatAllocationDao.delete(seat);
+			System.out.println(seat.getId());
+		}
+		
 		//b.removeSeat(null); //Pending Work
 //		BusDetails bus=busDao.findByBusNoAndDate(b.getBusNo(), b.getDate()).orElseThrow(()-> new RuntimeException("Bus Not Found"));
 //		SeatAvailability s=seatAvailabilityDao.findByBusDetailsAndDate(bus, b.getDate());

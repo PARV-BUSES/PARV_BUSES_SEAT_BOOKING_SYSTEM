@@ -13,7 +13,7 @@ import com.app.entities.Station;
 public interface RouteDao  extends JpaRepository<Routes, Long>{
 	
 //	List<Routes> findByStation_id_boardingAndStation_id_destination();
-//	Optional<Routes> findByStation_id_boardingAndStation_id_destination(long from,long to);
+	Optional<Routes> findByStationIdBoardingAndStationIdDestination(Station from,Station to);
 	
 	 
 

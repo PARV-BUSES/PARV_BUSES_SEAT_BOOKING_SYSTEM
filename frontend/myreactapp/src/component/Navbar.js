@@ -128,7 +128,7 @@ function Navbar() {
               <a class="dropdown-item" href="/changepassword">
                 Change Password
               </a>
-              {/* <div class="dropdown-divider"></div> */}
+              
               <a onClick={()=>{sessionStorage.clear();navigate("/")}} class="dropdown-item" href="#">
                 Logout
               </a>

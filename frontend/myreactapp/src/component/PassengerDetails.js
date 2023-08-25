@@ -18,7 +18,7 @@ function Passenger() {
   const handleChange = (e) => {
     var passengercopy = { ...passenger };
     passengercopy[e.target.name] = e.target.value;
-    console.log(passenger);
+    // console.log(passenger);
     setPassenger(passengercopy);
   };
 
@@ -32,7 +32,7 @@ function Passenger() {
       )
       .then((res) => {
         setServerResp(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((error) => {
         console.log(error);

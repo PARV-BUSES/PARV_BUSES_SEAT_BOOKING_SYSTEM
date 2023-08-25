@@ -13,12 +13,13 @@ public class BookingsDto {
 
 	
 	private int busNo;
-	private int start;
-	private int end ;
+	private String start;
+	private String end ;
 	private long passengerId;
 	private long routesId;
 	private long userId;
 	private LocalDate date;
+	private int seatNo;
 	
 	
 	

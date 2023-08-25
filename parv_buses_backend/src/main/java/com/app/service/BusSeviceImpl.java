@@ -76,8 +76,8 @@ public class BusSeviceImpl implements BusService {
 //		list.stream().filter(e -> e.getStation_id_boarding() == from && 
 //				e.getStation_id_destination() == to ).forEach(e->System.out.println(e.getDistance()*2));
 		
-		List<Routes> l= list.stream().filter(e -> e.getStation_id_boarding() == from && 
-				e.getStation_id_destination() == to ).collect(Collectors.toList());
+		List<Routes> l= list.stream().filter(e -> e.getStationIdBoarding() == from && 
+				e.getStationIdDestination()== to ).collect(Collectors.toList());
 		
 		List<BusDetails> buses = busDao.findByRoute(l.get(0));
 		
@@ -94,8 +94,8 @@ public class BusSeviceImpl implements BusService {
 				duration = String.valueOf(d)+"min";
 			}
 			
-			String from1 = from.getStation_name();
-			String to1 = to.getStation_name();
+			String from1 = from.getStationName();
+			String to1 = to.getStationName();
 			SeatAvailability seat = seatAvailabilityDao.findByBusDetails(bus);
 			int seats = seat.getAvailable_seats();
 			SendBusDto sendbusobj = new SendBusDto(bus.getDate(),bus.getBusNo(),bus.getId(),bus.getTime(),from1, to1, cost, seats,duration);

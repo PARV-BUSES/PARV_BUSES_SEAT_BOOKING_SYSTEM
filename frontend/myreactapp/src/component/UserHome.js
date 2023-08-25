@@ -42,7 +42,7 @@ function UserHome() {
       to: to,
     };
 
-    console.log(getBusData)
+    // console.log(getBusData)
 
     axios
       .post("http://localhost:8080/bus/getbus", getBusData)

@@ -1,6 +1,7 @@
 package com.app.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,7 +37,7 @@ public class Bookings extends Base{
 	
 	
 	@OneToMany(mappedBy = "booking",cascade = CascadeType.ALL,orphanRemoval = true)
-	private List<SeatAllocation> seatlist;
+	private List<SeatAllocation> seatlist = new ArrayList<SeatAllocation>();
 	
 	public void addSeat(SeatAllocation s) {
 		seatlist.add(s);//parent to child 

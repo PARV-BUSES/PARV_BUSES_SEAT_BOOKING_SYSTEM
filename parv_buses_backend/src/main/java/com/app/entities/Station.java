@@ -20,12 +20,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Station extends Base{
-	private String station_name;
+	private String stationName;
 
-    @OneToMany(mappedBy = "station_id_boarding")
+    @OneToMany(mappedBy = "stationIdBoarding")
     private List<Routes> boardingRoutes;
 
-    @OneToMany(mappedBy = "station_id_destination")
+    @OneToMany(mappedBy = "stationIdDestination")
     private List<Routes> destinationRoutes;
 
 }
