@@ -168,7 +168,7 @@ function SeatBookComp() {
 
       <div className="container mt-5">
         <div className="text-center">
-          <p>Select your seat:</p>
+          <p  style={{color:"white",fontSize:"20px"}}>Select your seat:</p>
           <div className="d-flex flex-wrap justify-content-center">
             {Array.from({ length: totalSeats }, (_, index) => (
               <Seat
