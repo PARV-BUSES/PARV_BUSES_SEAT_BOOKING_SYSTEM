@@ -2,8 +2,8 @@ import React from "react";
 
 function ContactUs() {
   return (
-    <div style={{ textAlign: "center", marginTop: "40px", color: "#333" }}>
-      <h2 style={{ color: "#003366" }}>Contact Us</h2>
+    <div style={{ textAlign: "center", marginTop: "40px", color: "rgb(213, 245, 227 )"}}>
+      <h2 style={{ color: "whitesmoke" }}>Contact Us</h2>
       <p style={{ fontSize: "18px" }}>
         Have a question or need assistance? Feel free to get in touch with us.
       </p>
@@ -15,7 +15,7 @@ function ContactUs() {
           ParvBus,Oppo Alankar Hotel ,Karad 415105
         </span>
       </p>
-      <div style={{ marginTop: "20px", color: "#777" }}>
+      <div style={{ marginTop: "20px", color:"whitesmoke" }}>
         Working hours: Mon - Fri, 9 AM - 6 PM
       </div>
     </div>

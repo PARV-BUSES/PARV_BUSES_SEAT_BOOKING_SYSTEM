@@ -51,15 +51,6 @@ function Navbar() {
                 </a>
               </li>
             </Link>
-            {/* {
-              sessionStorage.getItem("userid")==null?<Link to="/adminhome">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Admin
-                </a>
-              </li>
-            </Link>:console.log()
-            } */}
 
             {sessionStorage.getItem("userid") != null ? (
               <li class="nav-item dropdown" style={{ listStyle: "none" }}>
@@ -103,13 +94,31 @@ function Navbar() {
             ) : (
               console.log()
             )}
-            {/* <Link to="/login">
-              <li class="nav-item">
-                <a class="nav-link " href="#">
-                  Login
-                </a>
-              </li>
-            </Link> */}
+            
+             <Link to="/aboutus">
+                <li class="nav-item">
+                  <a class="nav-link " href="#">
+                    About Us
+                  </a>
+                </li>
+              </Link>
+
+              <Link to="/contactus">
+                <li class="nav-item">
+                  <a class="nav-link " href="#">
+                    Contact Us
+                  </a>
+                </li>
+              </Link>
+
+              <Link to="/faq">
+                <li class="nav-item">
+                  <a class="nav-link " href="#">
+                    FAQ
+                  </a>
+                </li>
+              </Link>
+
           </ul>
           <form class="form-inline my-2 my-lg-0">
             {sessionStorage.getItem("userid") == null &&
@@ -137,7 +146,9 @@ function Navbar() {
               aria-expanded="false">
               Account
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div
+              class="dropdown-menu dropdown-menu-right"
+              aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/profile">
                 My Profile
               </a>

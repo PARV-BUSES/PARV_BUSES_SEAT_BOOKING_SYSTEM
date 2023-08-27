@@ -74,7 +74,7 @@ function MyBookings() {
         <tbody>
           {bookings.map((booking) => (
             <tr key={booking.id}>
-              <td>{booking.id}</td>
+              <td>PARV{booking.id}</td>
               <td>{booking.seatno}</td>
               <td>{booking.busNo}</td>
               <td>{booking.start}</td>

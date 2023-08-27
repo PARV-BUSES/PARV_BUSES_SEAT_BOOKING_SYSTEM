@@ -19,18 +19,18 @@ function FAQ() {
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" ,marginLeft:"250px" ,width:"60%"}}>
-      <h1 style={{ color: "#003366" }}>Frequently Asked Questions</h1>
+      <h1 style={{ color: "whitesmoke" }}>Frequently Asked Questions</h1>
       <div style={{ margin: "10px 0" }}>
         <div
           style={{
             cursor: "pointer",
             fontWeight: "bold",
-            color: "#009688",
+            color:"wheat",
             fontSize: "18px",
           }}
           onClick={toggleQuestion1}
         >
-          Question 1: What are the advantages of purchasing a bus ticket with redBus?{" "}
+          Question 1: What are the advantages of purchasing a bus ticket with ParvBus?{" "}
           <span
             style={{
               display: "inline-block",
@@ -42,7 +42,7 @@ function FAQ() {
           </span>
         </div>
         {isQuestion1Open && (
-          <div style={{ color: "#555", marginTop: "5px", fontSize: "16px" }}>
+          <div style={{ color: "whitesmoke", marginTop: "5px", fontSize: "16px" }}>
            ParvBus is India’s bus tickets company and therefore, you will find the largest option of bus seats on the site. Some of the advantages of dealing with us are:
 
 -    You can choose your seat
@@ -57,7 +57,7 @@ function FAQ() {
           style={{
             cursor: "pointer",
             fontWeight: "bold",
-            color: "#009688",
+            color: "wheat",
             fontSize: "18px",
           }}
           onClick={toggleQuestion2}
@@ -70,13 +70,14 @@ function FAQ() {
               display: "inline-block",
               marginLeft: "5px",
               transition: "transform 0.3s ease-in-out",
+              color:"white"
             }}
           >
             {isQuestion2Open ? "▼" : "►"}
           </span>
         </div>
         {isQuestion2Open && (
-          <div style={{ color: "#555", marginTop: "5px", fontSize: "16px" }}>
+          <div style={{ color: "white", marginTop: "5px", fontSize: "16px" }}>
          Most of the tickets can be cancelled online. However, there are some tickets that can only be cancelled through our call center.
           However please note that the cancellation fee and cancellation period may differ for specific bus services. Please contact any of our executives for cancellation details on any specific service.
           </div>
@@ -87,7 +88,7 @@ function FAQ() {
           style={{
             cursor: "pointer",
             fontWeight: "bold",
-            color: "#009688",
+            color: "wheat",
             fontSize: "18px",
           }}
           onClick={toggleQuestion3}
@@ -106,7 +107,7 @@ function FAQ() {
           </span>
         </div>
         {isQuestion3Open && (
-          <div style={{ color: "#555", marginTop: "5px", fontSize: "16px" }}>
+          <div style={{ color: "white", marginTop: "5px", fontSize: "16px" }}>
             1.Piyush Ghate<br/>
             2.Aniket Badade<br/>
             3.Ritesh Rane<br/>

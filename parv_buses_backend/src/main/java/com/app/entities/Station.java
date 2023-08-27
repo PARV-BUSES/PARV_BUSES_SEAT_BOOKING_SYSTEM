@@ -22,7 +22,7 @@ import lombok.ToString;
 public class Station extends Base{
 	private String stationName;
 
-    @OneToMany(mappedBy = "stationIdBoarding")
+    @OneToMany(mappedBy = "stationIdBoarding",fetch = FetchType.EAGER)
     private List<Routes> boardingRoutes;
 
     @OneToMany(mappedBy = "stationIdDestination")

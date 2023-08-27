@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AllRoutes from "./AllRoutes";
 
 function AddRoute() {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ function AddRoute() {
         })
         .catch((error) => {
           console.log(error);
-          toast("Something went wrong.")
+          toast("Something went wrong.");
         });
     }
   };
@@ -59,64 +60,71 @@ function AddRoute() {
   return (
     <>
       {sessionStorage.getItem("isAdmin") == "true" ? (
-        <form
-          style={{
-            width: "30%",
-            left: "450px",
-            position: "absolute",
-            boxShadow: "10px 10px 10px 5px grey",
-            padding: "20px",
-            marginTop: "10px",
-          }}>
-          <div className="form-group">
-            <label htmlFor="exampleInputFrom">From</label>
-            <select
-              className="form-control"
-              name="stationIdFrom"
-              onChange={handleChanges}
-              value={routeData.stationIdFrom}>
-              <option>select</option>
-              {stationList.map((e) => (
-                <option value={e.id} key={e.id}>
-                  {e.station_name}
-                </option>
-              ))}
-            </select>
-          </div>
+        <div style={{ position: "relative" }}>
+          <form
+            style={{
+              width: "30%",
+              left: "450px",
+              position: "absolute",
+              boxShadow: "10px 10px 10px 5px grey",
+              padding: "20px",
+              marginTop: "10px",
+            }}>
+            <div className="form-group">
+              <label htmlFor="exampleInputFrom">From</label>
+              <select
+                className="form-control"
+                name="stationIdFrom"
+                onChange={handleChanges}
+                value={routeData.stationIdFrom}>
+                <option>select</option>
+                {stationList.map((e) => (
+                  <option value={e.id} key={e.id}>
+                    {e.station_name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="exampleInputTo">To</label>
-            <select
-              className="form-control"
-              name="stationIdTo"
-              onChange={handleChanges}
-              value={routeData.stationIdTo}>
-              <option>select</option>
-              {stationList.map((e) => (
-                <option value={e.id} key={e.id}>
-                  {e.station_name}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className="form-group">
+              <label htmlFor="exampleInputTo">To</label>
+              <select
+                className="form-control"
+                name="stationIdTo"
+                onChange={handleChanges}
+                value={routeData.stationIdTo}>
+                <option>select</option>
+                {stationList.map((e) => (
+                  <option value={e.id} key={e.id}>
+                    {e.station_name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="exampleInputDistance">Distance</label>
-            <input
-              type="text"
-              className="form-control"
-              id="distance"
-              name="distance"
-              value={routeData.distance}
-              onChange={handleChanges}
-              placeholder="Enter Distance"
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="exampleInputDistance">Distance</label>
+              <input
+                type="text"
+                className="form-control"
+                id="distance"
+                name="distance"
+                value={routeData.distance}
+                onChange={handleChanges}
+                placeholder="Enter Distance"
+              />
+            </div>
 
-          <button type="button" onClick={addRoute} className="btn btn-primary">
-            Add Route
-          </button>
-        </form>
+            <button
+              type="button"
+              onClick={addRoute}
+              className="btn btn-primary">
+              Add Route
+            </button>
+           
+          </form>
+          
+        </div>
       ) : (
         navigate("/adminlogin")
       )}

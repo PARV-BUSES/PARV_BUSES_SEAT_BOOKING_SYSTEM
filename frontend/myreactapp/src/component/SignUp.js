@@ -2,65 +2,78 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Signup() {
-
   const navigate = useNavigate();
 
-  const [signUpData,setSignUpData] = useState({
-
-      firstname:"",
-      lastname:"",
-      email:"",
-      gender:"",
-      mobile:"",
-      password:"",
-      age:""
-      
-
+  const [signUpData, setSignUpData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    gender: "",
+    mobile: "",
+    password: "",
+    age: "",
   });
 
-  const [serverResp,setServerResp] = useState(false);
+  const [serverResp, setServerResp] = useState(false);
 
-
-  const handleSignupDataData = () =>{
-
+  const handleSignupDataData = () => {
     // const apiUrl = "http://localhost:8080/user/signup";
 
     // console.log(signUpData)
 
     // debugger
     // console.log(serverResp)
-    axios.post("http://localhost:8080/user/signup",signUpData)
-      .then((response)=>{setServerResp(response.data.status)})
-      .catch((error)=>console.log(error+"some error"))
+    if (signUpData.password.length < 8) {
+      toast("Password length cannot be less than 8.");
+    } else if (
+      signUpData.firstname == "" ||
+      signUpData.lastname == "" ||
+      signUpData.email == "" ||
+      signUpData.gender == "" ||
+      signUpData.mobile == "" ||
+      signUpData.age == ""
+    ) {
+      toast("Please fill all the details.");
+    } else {
+      axios
+        .post("http://localhost:8080/user/signup", signUpData)
+        .then((response) => {
+          setServerResp(response.data.status);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast("Mobile no or email already registered.");
+        });
+    }
+  };
 
-   
-
+  if (serverResp) {
+    navigate("/login");
   }
 
-  if(serverResp){
-    navigate("/login")
-  }
-
-
-  const handleChange = (e) =>{
-
-    var signUpDataCopy = {...signUpData};
+  const handleChange = (e) => {
+    var signUpDataCopy = { ...signUpData };
     signUpDataCopy[e.target.name] = e.target.value;
     // console.log(signUpData)
-    setSignUpData(signUpDataCopy)
-    
-  }
-
-
-
+    setSignUpData(signUpDataCopy);
+  };
 
   return (
     <>
-      <form style={{width:"30%",left:"450px",position:"absolute",boxShadow:"10px 10px 10px 5px grey",padding:"20px",marginTop:"10px"}}>
-      <div class="form-group">
+      <form
+        style={{
+          width: "30%",
+          left: "450px",
+          position: "absolute",
+          padding: "20px",
+          marginTop: "10px",
+          color: "white",
+        }}>
+        <div class="form-group">
           <label for="exampleInputEmail1">Firstname</label>
           <input
             type="text"
@@ -95,18 +108,25 @@ function Signup() {
             id="lastname"
             placeholder="Enter Lastname"
           /> */}
-            
 
-          <select className="form-control"
+          <select
+            className="form-control"
             id="gender"
             name="gender"
             value={signUpData.gender}
-            onChange={handleChange}
-          >
-            <option value="" key="0">SELECT</option>
-            <option value="M" key="1">MALE</option>
-            <option value="F" key="2">FEMALE</option>
-            <option value="O" key="3">OTHER</option>
+            onChange={handleChange}>
+            <option value="" key="0">
+              SELECT
+            </option>
+            <option value="M" key="1">
+              MALE
+            </option>
+            <option value="F" key="2">
+              FEMALE
+            </option>
+            <option value="O" key="3">
+              OTHER
+            </option>
           </select>
         </div>
 
@@ -167,16 +187,15 @@ function Signup() {
             required
           />
         </div>
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-          <label class="form-check-label" for="exampleCheck1">
-            Check me out
-          </label>
-        </div>
-        <button onClick={handleSignupDataData} type="button" class="btn btn-primary">
+       
+        <button
+          onClick={handleSignupDataData}
+          type="button"
+          class="btn btn-primary">
           Register
         </button>
       </form>
+      <ToastContainer />
     </>
   );
 }

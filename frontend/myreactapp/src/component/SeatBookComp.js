@@ -90,21 +90,27 @@ function SeatBookComp() {
     } else {
       axios
         .post("http://localhost:8080/bookings/book", dataToBeSent)
-        .then((response) => {console.log(response);
-            if(response.data.message == "Booking Succesful."){
-              toast("Ticket is booked..")
-            }
-        })
-        .catch((error) => console.log(error));
-      axios
-        .post("http://localhost:8080/seats/seatbooking", dataToBeSent)
-        .then((response) => {console.log(response);
-          if(response.data.message == "Booking Succesful."){
-            toast("Seat allocated succesfully..")
+        .then((response) => {
+          console.log(response);
+          if (response.data.message == "Booking Succesful.") {
+            toast("Ticket is booked..");
+            //added
+            axios
+              .post("http://localhost:8080/seats/seatbooking", dataToBeSent)
+              .then((response) => {
+                console.log(response);
+                if (response.data.message == "Booking Succesful.") {
+                  toast("Seat allocated succesfully..");
+                }
+                console.log("in seat booking");
+              })
+              .catch((error) => console.log(error));
           }
-          console.log("in seat booking")
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          toast("This seat is already booked.")
+        });
     }
   };
 
@@ -168,7 +174,7 @@ function SeatBookComp() {
 
       <div className="container mt-5">
         <div className="text-center">
-          <p  style={{color:"white",fontSize:"20px"}}>Select your seat:</p>
+          <p style={{ color: "white", fontSize: "20px" }}>Select your seat:</p>
           <div className="d-flex flex-wrap justify-content-center">
             {Array.from({ length: totalSeats }, (_, index) => (
               <Seat
