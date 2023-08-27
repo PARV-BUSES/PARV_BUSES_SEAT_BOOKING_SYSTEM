@@ -44,7 +44,7 @@ function Profile() {
     } else {
       axios
         .put(
-          `http://localhost:8080/user/updateprofile/${userData.id}`,
+          `http://13.234.240.15:8080/user/updateprofile/${userData.id}`,
           updatedProfile
         )
         .then((resp) => {

@@ -40,7 +40,7 @@ function Signup() {
       toast("Please fill all the details.");
     } else {
       axios
-        .post("http://localhost:8080/user/signup", signUpData)
+        .post("http://13.234.240.15:8080/user/signup", signUpData)
         .then((response) => {
           setServerResp(response.data.status);
         })

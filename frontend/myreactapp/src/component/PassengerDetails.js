@@ -34,7 +34,7 @@ function Passenger() {
     } else {
       axios
         .post(
-          `http://localhost:8080/passenger/addpassenger/${sessionStorage.getItem(
+          `http://13.234.240.15:8080/passenger/addpassenger/${sessionStorage.getItem(
             "userid"
           )}`,
           passenger

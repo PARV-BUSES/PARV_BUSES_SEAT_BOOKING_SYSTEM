@@ -27,7 +27,7 @@ function AddBus() {
     } else {
       axios
         .post(
-          "http://localhost:8080/bus/addbus/" + busdetails.routeId,
+          "http://13.234.240.15:8080/bus/addbus/" + busdetails.routeId,
           busdetails
         )
         .then((resp) => {

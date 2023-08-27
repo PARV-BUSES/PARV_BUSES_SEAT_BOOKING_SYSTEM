@@ -15,7 +15,7 @@ function DeleteRoute() {
 
   const deleteroute = () => {
     axios
-      .delete(`http://localhost:8080/route/deleteroute/${routeid}`)
+      .delete(`http://13.234.240.15:8080/route/deleteroute/${routeid}`)
       .then((resp) => {
         {
           console.log(resp);

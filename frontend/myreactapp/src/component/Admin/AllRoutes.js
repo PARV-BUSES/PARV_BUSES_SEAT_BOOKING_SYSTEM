@@ -7,7 +7,7 @@ function AllRoutes() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/route/allroutes")
+      .get("http://13.234.240.15:8080/route/allroutes")
       .then((res) => {
         console.log(res.data);
         setRoutes(res.data); // Update the state with the response data

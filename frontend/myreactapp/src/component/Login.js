@@ -31,7 +31,7 @@ function Login() {
   const handleLogin = () => {
     sessionStorage.clear()
     axios
-      .post("http://localhost:8080/user/login", loginData)
+      .post("http://13.234.240.15:8080/user/login", loginData)
       .then((res) => {setServerRes(res.data);console.log(res.status)})
       .catch((error) => {
         console.log(error.response.status);

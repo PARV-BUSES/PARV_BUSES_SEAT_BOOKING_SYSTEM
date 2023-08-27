@@ -10,7 +10,7 @@ function PassengerList() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/passenger/getpassengers/${userId}`)
+      .get(`http://13.234.240.15:8080/passenger/getpassengers/${userId}`)
       .then((response) => {
         setPassengers(response.data);
       })
@@ -27,7 +27,7 @@ function PassengerList() {
     };
 
     axios
-      .post(`http://localhost:8080/passenger/removepassenger`, data)
+      .post(`http://13.234.240.15:8080/passenger/removepassenger`, data)
       .then((response) => {
         if (response.status === 200) {
           setPassengers((prevPassengers) =>

@@ -17,7 +17,7 @@ function DeleteBus() {
       toast("Please enter valid bus no.");
     } else {
       axios
-        .delete(`http://localhost:8080/bus/removebus/${busNo}`)
+        .delete(`http://13.234.240.15:8080/bus/removebus/${busNo}`)
         .then((resp) => {
           console.log(resp);
           toast("Bus removed succesfully");

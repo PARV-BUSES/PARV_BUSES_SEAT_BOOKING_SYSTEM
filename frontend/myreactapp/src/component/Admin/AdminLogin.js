@@ -30,7 +30,7 @@ function AdminLogin() {
 
   const handleLogin =() =>{
     axios
-    .post("http://localhost:8080/admin",loginData)
+    .post("http://13.234.240.15:8080/admin",loginData)
     .then((res)=>
     console.log(res.data),console.log("signup sucessfull"))
     .catch((error)=>{

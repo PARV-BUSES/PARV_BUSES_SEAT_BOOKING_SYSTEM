@@ -23,7 +23,7 @@ function ChangePassword() {
 
   const changepass = () => {
     axios
-      .post("http://localhost:8080/user/changepassword", loginData)
+      .post("http://13.234.240.15:8080/user/changepassword", loginData)
       .then((res) => {
         setServerRes(res.data.status);
         // console.log(res.data)
@@ -45,6 +45,8 @@ function ChangePassword() {
       });
     // debugger
   };
+
+  
 
   return (
     <form

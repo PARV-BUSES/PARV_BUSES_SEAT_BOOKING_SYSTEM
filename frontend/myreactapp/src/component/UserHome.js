@@ -27,7 +27,7 @@ function UserHome() {
     }
 
     axios
-      .get("http://localhost:8080/station/getstations")
+      .get("http://13.234.240.15:8080/station/getstations")
       .then((response) => setStationList(response.data))
       .catch((error) => {
         console.log(error + "some error");
@@ -46,7 +46,7 @@ function UserHome() {
     };
 
     axios
-      .post("http://localhost:8080/bus/getbus", getBusData)
+      .post("http://13.234.240.15:8080/bus/getbus", getBusData)
       .then((response) => setBuses(response.data))
       .catch((error) => {
         console.log(error + "some error1")

@@ -20,7 +20,7 @@ function AddStation() {
       toast("Please enter valid station");
     } else {
       axios
-        .post("http://localhost:8080/station/addstation", { stationName }) // Send the station name as an object
+        .post("http://13.234.240.15:8080/station/addstation", { stationName }) // Send the station name as an object
         .then((resp) => {
           console.log(resp.data);
           if(resp.data.message == "Station added Successfully"){

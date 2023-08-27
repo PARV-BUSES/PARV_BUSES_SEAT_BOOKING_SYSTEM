@@ -68,7 +68,7 @@ function SeatBookComp() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8080/passenger/getpassengers/${sessionStorage.getItem(
+        `http://13.234.240.15:8080/passenger/getpassengers/${sessionStorage.getItem(
           "userid"
         )}`
       )
@@ -89,14 +89,14 @@ function SeatBookComp() {
       toast("Please select the seat..");
     } else {
       axios
-        .post("http://localhost:8080/bookings/book", dataToBeSent)
+        .post("http://13.234.240.15:8080/bookings/book", dataToBeSent)
         .then((response) => {
           console.log(response);
           if (response.data.message == "Booking Succesful.") {
             toast("Ticket is booked..");
             //added
             axios
-              .post("http://localhost:8080/seats/seatbooking", dataToBeSent)
+              .post("http://13.234.240.15:8080/seats/seatbooking", dataToBeSent)
               .then((response) => {
                 console.log(response);
                 if (response.data.message == "Booking Succesful.") {

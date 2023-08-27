@@ -25,7 +25,7 @@ function AddRoute() {
   useEffect(() => {
     console.log("in use");
     axios
-      .get("http://localhost:8080/station/getstations")
+      .get("http://13.234.240.15:8080/station/getstations")
       .then((resp) => {
         setStationList(resp.data);
       })
@@ -41,7 +41,7 @@ function AddRoute() {
       toast("Please select valid details");
     } else {
       axios
-        .post("http://localhost:8080/route/addroute", routeData)
+        .post("http://13.234.240.15:8080/route/addroute", routeData)
         .then((response) => {
           {
             console.log(response.data);

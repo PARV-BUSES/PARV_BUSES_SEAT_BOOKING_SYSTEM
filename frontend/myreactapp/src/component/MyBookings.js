@@ -24,7 +24,7 @@ function MyBookings() {
     console.log(sessionStorage.getItem("userid"));
     axios
       .get(
-        `http://localhost:8080/bookings/getbooking/${sessionStorage.getItem(
+        `http://13.234.240.15:8080/bookings/getbooking/${sessionStorage.getItem(
           "userid"
         )}`
       )
@@ -39,7 +39,7 @@ function MyBookings() {
   const cancelTicket = (id) => {
     if (window.confirm("Please confirm if you want to cancel the booking?")) {
       axios
-        .delete(`http://localhost:8080/bookings/cancelbooking/${id}`)
+        .delete(`http://13.234.240.15:8080/bookings/cancelbooking/${id}`)
         .then((resp) => {
           console.log("Ticket cancelled:", resp.data);
           if(resp.data.message == "Booking Cancel"){
