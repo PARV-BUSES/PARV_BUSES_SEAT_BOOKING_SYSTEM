@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import api_ip from "../commonapi";
 
 function AddStation() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ function AddStation() {
       toast("Please enter valid station");
     } else {
       axios
-        .post("http://13.234.240.15:8080/station/addstation", { stationName }) // Send the station name as an object
+        .post(`${api_ip}/station/addstation`, { stationName }) // Send the station name as an object
         .then((resp) => {
           console.log(resp.data);
           if(resp.data.message == "Station added Successfully"){

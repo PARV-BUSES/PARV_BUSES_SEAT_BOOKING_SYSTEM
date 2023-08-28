@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Message from "./Message";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import api_ip from "./commonapi";
 
 function ChangePassword() {
   const [loginData, setLoginData] = useState({
@@ -12,107 +13,88 @@ function ChangePassword() {
   });
 
   const [serverRes, setServerRes] = useState(false);
-  //
 
   const handleChange = (e) => {
     var loginDataCopy = { ...loginData };
     loginDataCopy[e.target.name] = e.target.value;
-    console.log(loginData);
     setLoginData(loginDataCopy);
   };
 
   const changepass = () => {
     axios
-      .post("http://13.234.240.15:8080/user/changepassword", loginData)
+      .post(`${api_ip}/user/changepassword`, loginData)
       .then((res) => {
         setServerRes(res.data.status);
-        // console.log(res.data)
-        if(res.data.message == " Password Changed SuccessFully"){
-            toast("Password changed succesfully.")
-            setLoginData({
-                email: "",
-                password: "",
-                new_pass: "",
-              })
+        if (res.data.message === "Password Changed Successfully") {
+          toast("Password changed successfully.");
+          setLoginData({
+            email: "",
+            password: "",
+            new_pass: "",
+          });
+        } else {
+          toast("Please enter valid email or old password.");
         }
-        else{
-            toast("Please enter valid email or old password.")
-        }
-    })
-
+      })
       .catch((error) => {
         console.log(error);
       });
-    // debugger
   };
 
-  
-
   return (
-    <form
-      style={{
-        width: 400,
-        left: 480,
-        top: 120,
-        position: "absolute",
-        padding: "15px",
-        boxShadow: "10px 10px 10px 5px grey",
-      }}>
-      {/* <!-- Email input --> */}
-      <div class="form-outline mb-4">
-        <label class="form-label" for="form2Example1">
-          Email address
-        </label>
-        <input
-          type="email"
-          name="email"
-          value={loginData.email}
-          onChange={handleChange}
-          id="email"
-          class="form-control"
-        />
+    <div className="container text-light">
+      <div className="row justify-content-center">
+        <div className="col-md-4">
+          <form className="p-4 shadow mt-5">
+            <h3 className="mb-4">Change Password</h3>
+            <div className="form-group">
+              <label htmlFor="email">Email address</label>
+              <input
+                type="email"
+                name="email"
+                value={loginData.email}
+                onChange={handleChange}
+                id="email"
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Old Password</label>
+              <input
+                type="password"
+                name="password"
+                value={loginData.password}
+                onChange={handleChange}
+                id="password"
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="new_pass">New Password</label>
+              <input
+                type="password"
+                name="new_pass"
+                value={loginData.new_pass}
+                onChange={handleChange}
+                id="newpassword"
+                className="form-control"
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={changepass}
+              className="btn btn-primary btn-block mb-4"
+            >
+              Change Password
+            </button>
+            <ToastContainer />
+          </form>
+        </div>
       </div>
-
-      {/* <!-- Password input --> */}
-      <div class="form-outline mb-4">
-        <label class="form-label" for="form2Example2">
-          Old Password
-        </label>
-        <input
-          type="password"
-          name="password"
-          value={loginData.password}
-          onChange={handleChange}
-          id="password"
-          class="form-control"
-        />
-      </div>
-
-      <div class="form-outline mb-4">
-        <label class="form-label" for="form2Example2">
-          New Password
-        </label>
-        <input
-          type="password"
-          name="new_pass"
-          value={loginData.new_pass}
-          onChange={handleChange}
-          id="newpassword"
-          class="form-control"
-        />
-      </div>
-
-      {/* <!-- 2 column grid layout for inline styling --> */}
-
-      {/* <!-- Submit button --> */}
-      <button
-        type="button"
-        onClick={changepass}
-        class="btn btn-primary btn-block mb-4">
-        ChangePassword
-      </button>
-      <ToastContainer/>
-    </form>
+    </div>
   );
 }
 

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Table, Button } from 'react-bootstrap';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import api_ip from "./commonapi";
 
 function PassengerList() {
   const [passengers, setPassengers] = useState([]);
@@ -10,7 +11,7 @@ function PassengerList() {
 
   useEffect(() => {
     axios
-      .get(`http://13.234.240.15:8080/passenger/getpassengers/${userId}`)
+      .get(`${api_ip}/passenger/getpassengers/${userId}`)
       .then((response) => {
         setPassengers(response.data);
       })
@@ -26,8 +27,9 @@ function PassengerList() {
       passengerid: id
     };
 
-    axios
-      .post(`http://13.234.240.15:8080/passenger/removepassenger`, data)
+    if(window.confirm("Please confirm if you want to cancel booking?")){
+      axios
+      .post(`${api_ip}/passenger/removepassenger`, data)
       .then((response) => {
         if (response.status === 200) {
           setPassengers((prevPassengers) =>
@@ -40,11 +42,13 @@ function PassengerList() {
       .catch((error) => {
         console.error("Error removing passenger:", error);
       });
+    }
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", height: "100vh" }}>
-      <div style={{ width: "30%" }}>
+    <div className="container">
+      <h3 className="mt-4 mb-3">Passenger List</h3>
+      <div className="table-responsive">
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -70,8 +74,8 @@ function PassengerList() {
             ))}
           </tbody>
         </Table>
-        <ToastContainer/>
       </div>
+      <ToastContainer/>
     </div>
   );
 }

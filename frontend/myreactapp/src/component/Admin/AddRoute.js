@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AllRoutes from "./AllRoutes";
+import api_ip from "../commonapi";
 
 function AddRoute() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ function AddRoute() {
   useEffect(() => {
     console.log("in use");
     axios
-      .get("http://13.234.240.15:8080/station/getstations")
+      .get(`${api_ip}/station/getstations`)
       .then((resp) => {
         setStationList(resp.data);
       })
@@ -41,7 +42,7 @@ function AddRoute() {
       toast("Please select valid details");
     } else {
       axios
-        .post("http://13.234.240.15:8080/route/addroute", routeData)
+        .post(`${api_ip}/route/addroute`, routeData)
         .then((response) => {
           {
             console.log(response.data);

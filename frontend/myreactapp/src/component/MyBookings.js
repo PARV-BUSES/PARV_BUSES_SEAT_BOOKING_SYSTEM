@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import api_ip from "./commonapi";
 
 function MyBookings() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function MyBookings() {
     console.log(sessionStorage.getItem("userid"));
     axios
       .get(
-        `http://13.234.240.15:8080/bookings/getbooking/${sessionStorage.getItem(
+        `${api_ip}/bookings/getbooking/${sessionStorage.getItem(
           "userid"
         )}`
       )
@@ -39,11 +40,11 @@ function MyBookings() {
   const cancelTicket = (id) => {
     if (window.confirm("Please confirm if you want to cancel the booking?")) {
       axios
-        .delete(`http://13.234.240.15:8080/bookings/cancelbooking/${id}`)
+        .delete(`${api_ip}/bookings/cancelbooking/${id}`)
         .then((resp) => {
-          console.log("Ticket cancelled:", resp.data);
-          if(resp.data.message == "Booking Cancel"){
-            toast("Booking cancelled succesfully.")
+          console.log("Ticket canceled:", resp.data);
+          if (resp.data.message === "Booking Cancel") {
+            toast("Booking canceled successfully.");
           }
           // Refresh bookings after cancellation
           getBookingData();
@@ -55,45 +56,48 @@ function MyBookings() {
   };
 
   return (
-    <div style={{ width: "70%", marginLeft: "180px" }}>
+    <div className="container">
       <h3>My Bookings</h3>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Ticket Id</th>
-            <th>Seat No</th>
-            <th>Bus No</th>
-            <th>Boarding</th>
-            <th>Destination</th>
-            <th>Date of Journey</th>
-            <th>Passenger Name</th>
-            <th>Age</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bookings.map((booking) => (
-            <tr key={booking.id}>
-              <td>PARV{booking.id}</td>
-              <td>{booking.seatno}</td>
-              <td>{booking.busNo}</td>
-              <td>{booking.start}</td>
-              <td>{booking.end}</td>
-              <td>{booking.date}</td>
-              <td>{booking.passengerName}</td>
-              <td>{booking.age}</td>
-              <td>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => cancelTicket(booking.id)}>
-                  Cancel Ticket
-                </button>
-              </td>
+      <div className="table-responsive">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Ticket Id</th>
+              <th>Seat No</th>
+              <th>Bus No</th>
+              <th>Boarding</th>
+              <th>Destination</th>
+              <th>Date of Journey</th>
+              <th>Passenger Name</th>
+              <th>Age</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <ToastContainer/>
+          </thead>
+          <tbody>
+            {bookings.map((booking) => (
+              <tr key={booking.id}>
+                <td>PARV{booking.id}</td>
+                <td>{booking.seatno}</td>
+                <td>{booking.busNo}</td>
+                <td>{booking.start}</td>
+                <td>{booking.end}</td>
+                <td>{booking.date}</td>
+                <td>{booking.passengerName}</td>
+                <td>{booking.age}</td>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => cancelTicket(booking.id)}
+                  >
+                    Cancel Ticket
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ToastContainer />
     </div>
   );
 }

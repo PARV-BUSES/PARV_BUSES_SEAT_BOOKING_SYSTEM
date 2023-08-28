@@ -28,9 +28,9 @@ function Navbar() {
   return (
     <div>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-          PARV BUSES
-        </a>
+        {/* <div className="navbar-brand">
+          <img src="images/logo.jpg" alt="" height="5%" width="5%" />
+        </div> */}
         <button
           class="navbar-toggler"
           type="button"
@@ -44,16 +44,22 @@ function Navbar() {
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+                <a class="nav-link" href="#">
+                  PARV BUSES
+                </a>
+              </li>
             <Link to="/">
               <li class="nav-item active">
                 <a class="nav-link" href="#">
-                  Home
+                  Home<i class="fa fa-home" aria-hidden="true"></i>
                 </a>
               </li>
             </Link>
 
             {sessionStorage.getItem("userid") != null ? (
               <li class="nav-item dropdown" style={{ listStyle: "none" }}>
+               
                 <a
                   class="nav-link dropdown-toggle"
                   href="#"
@@ -62,7 +68,7 @@ function Navbar() {
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false">
-                  Manage Bookings
+                  Manage Bookings <i class="fa fa-ticket" aria-hidden="true"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="/mybookings">
@@ -94,31 +100,30 @@ function Navbar() {
             ) : (
               console.log()
             )}
-            
-             <Link to="/aboutus">
-                <li class="nav-item">
-                  <a class="nav-link " href="#">
-                    About Us
-                  </a>
-                </li>
-              </Link>
 
-              <Link to="/contactus">
-                <li class="nav-item">
-                  <a class="nav-link " href="#">
-                    Contact Us
-                  </a>
-                </li>
-              </Link>
+            <Link to="/aboutus">
+              <li class="nav-item">
+                <a class="nav-link " href="#">
+                  About Us<i class="fa fa-users" aria-hidden="true"></i>
+                </a>
+              </li>
+            </Link>
 
-              <Link to="/faq">
-                <li class="nav-item">
-                  <a class="nav-link " href="#">
-                    FAQ
-                  </a>
-                </li>
-              </Link>
+            <Link to="/contactus">
+              <li class="nav-item">
+                <a class="nav-link " href="#">
+                  Contact Us<i class="fa fa-envelope" aria-hidden="true"></i>
+                </a>
+              </li>
+            </Link>
 
+            <Link to="/faq">
+              <li class="nav-item">
+                <a class="nav-link " href="#">
+                  FAQ<i class="fa fa-question-circle" aria-hidden="true"></i>
+                </a>
+              </li>
+            </Link>
           </ul>
           <form class="form-inline my-2 my-lg-0">
             {sessionStorage.getItem("userid") == null &&
@@ -144,7 +149,9 @@ function Navbar() {
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false">
-              Account
+              {
+                sessionStorage.getItem("userid")==null?"Account":JSON.parse(sessionStorage.getItem("userdet")).firstname
+              }
             </a>
             <div
               class="dropdown-menu dropdown-menu-right"

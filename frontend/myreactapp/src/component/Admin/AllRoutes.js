@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table } from "react-bootstrap";
+import api_ip from "../commonapi";
 
 function AllRoutes() {
   const [routes, setRoutes] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://13.234.240.15:8080/route/allroutes")
+      .get(`${api_ip}/route/allroutes`)
       .then((res) => {
         console.log(res.data);
         setRoutes(res.data); // Update the state with the response data

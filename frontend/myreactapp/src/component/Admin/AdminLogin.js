@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import api_ip from "../commonapi";
 
 // useEffect(() => {
 //   axios.post("http://localhost:8080/user/login")
@@ -30,7 +31,7 @@ function AdminLogin() {
 
   const handleLogin =() =>{
     axios
-    .post("http://13.234.240.15:8080/admin",loginData)
+    .post(`${api_ip}/admin`,loginData)
     .then((res)=>
     console.log(res.data),console.log("signup sucessfull"))
     .catch((error)=>{

@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import api_ip from "./commonapi";
 
 function Seat(props) {
   const { seatNumber, isSelected, onSelectSeat } = props;
@@ -13,7 +14,8 @@ function Seat(props) {
   return (
     <button
       className={`btn ${seatClass} m-2`}
-      onClick={() => onSelectSeat(seatNumber)}>
+      onClick={() => onSelectSeat(seatNumber)}
+    >
       {seatNumber}
     </button>
   );
@@ -25,33 +27,29 @@ function SeatBookComp() {
   const [passData, setPassData] = useState([]);
   const [selectedPass, setSelectedPass] = useState(0);
 
-  // console.log(busdata);
   const totalSeats = 30; // Total number of seats
-  const [selectedSeat, setSelectedSeat] = useState(null); // Use state to track the selected seat
+  const [selectedSeat, setSelectedSeat] = useState(null);
 
   const handleSeatSelection = (seatNumber) => {
     if (selectedSeat === seatNumber) {
-      // If the clicked seat is already selected, deselect it
       setSelectedSeat(null);
     } else {
-      // Otherwise, select the clicked seat and deselect the previously selected one
       setSelectedSeat(seatNumber);
     }
   };
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     setSelectedPass(e.target.value);
   };
 
-  var busNo = JSON.parse(sessionStorage.getItem("busdata")).data.busno;
-  var start = JSON.parse(sessionStorage.getItem("busdata")).data.from;
-  var end = JSON.parse(sessionStorage.getItem("busdata")).data.to;
-  var userId = JSON.parse(sessionStorage.getItem("userid"));
-  var selectedPass1 = selectedPass;
-  var date = JSON.parse(sessionStorage.getItem("busdata")).data.date;
+  const busNo = JSON.parse(sessionStorage.getItem("busdata")).data.busno;
+  const start = JSON.parse(sessionStorage.getItem("busdata")).data.from;
+  const end = JSON.parse(sessionStorage.getItem("busdata")).data.to;
+  const userId = JSON.parse(sessionStorage.getItem("userid"));
+  const selectedPass1 = selectedPass;
+  const date = JSON.parse(sessionStorage.getItem("busdata")).data.date;
 
-  var dataToBeSent = {
+  const dataToBeSent = {
     busNo: busNo,
     start: start,
     end: end,
@@ -61,21 +59,15 @@ function SeatBookComp() {
     seatNo: selectedSeat,
   };
 
-  console.log(dataToBeSent);
-  // console.log(passData)
-  // passData.map((e)=>{console.log(e.id)})
-
   useEffect(() => {
     axios
       .get(
-        `http://13.234.240.15:8080/passenger/getpassengers/${sessionStorage.getItem(
+        `${api_ip}/passenger/getpassengers/${sessionStorage.getItem(
           "userid"
         )}`
       )
       .then((response) => {
-        console.log(response.data);
         setPassData(response.data);
-        // console.log(JSON.parse(sessionStorage.getItem("busdata")).data.busno)
       })
       .catch((error) => {
         console.log(error);
@@ -83,115 +75,108 @@ function SeatBookComp() {
   }, []);
 
   const handleSubmit = () => {
-    if (dataToBeSent.passengerId == 0) {
-      toast("Please select the passenger..");
-    } else if (dataToBeSent.seatNo == null) {
-      toast("Please select the seat..");
+    console.log(dataToBeSent)
+    if (dataToBeSent.passengerId === 0) {
+      if(sessionStorage.getItem("userid") == null){
+        toast("Please Login.")
+      }else{
+        toast("Please select the passenger.");
+      }
+     
+    } else if (dataToBeSent.seatNo === null) {
+      toast("Please select the seat.");
     } else {
       axios
-        .post("http://13.234.240.15:8080/bookings/book", dataToBeSent)
+        .post(`${api_ip}/bookings/book`, dataToBeSent)
         .then((response) => {
-          console.log(response);
-          if (response.data.message == "Booking Succesful.") {
-            toast("Ticket is booked..");
-            //added
+          console.log(response.data)
+          if (response.data.status == true) {
+            toast("Ticket is booked.");
+            // console
+          
             axios
-              .post("http://13.234.240.15:8080/seats/seatbooking", dataToBeSent)
+              .post(`${api_ip}/seats/seatbooking`, dataToBeSent)
               .then((response) => {
-                console.log(response);
-                if (response.data.message == "Booking Succesful.") {
-                  toast("Seat allocated succesfully..");
+                if (response.data.status == true) {
+                  toast("Seat allocated successfully.");
                 }
-                console.log("in seat booking");
               })
               .catch((error) => console.log(error));
           }
         })
         .catch((error) => {
           console.log(error);
-          toast("This seat is already booked.")
+          toast("This seat is already booked.");
         });
     }
   };
 
   return (
-    <>
-      <h1 className="text-center">Bus Seat Selection</h1>
-      <div
-        style={{
-          width: "60%",
-          marginLeft: 240,
-          backgroundColor: "rgb(220,220,220)",
-        }}>
-        <div class="row" style={{ padding: "10px" }}>
-          <div class="col-4">From: {busdata.from}</div>
-          <div class="col-4">To: {busdata.to}</div>
-          <div class="col-4">Departure Date: {busdata.date}</div>
-        </div>
-        <hr />
-        <div class="row" style={{ padding: "10px" }}>
-          <div class="col-2">Operator: </div>
-          <div class="col-2">Departure Time:</div>
-          <div class="col-2">Duration:</div>
-          <div class="col-2">Arrival: </div>
-          <div class="col-2">selected seat:</div>
-          <div class="col-2">price:</div>
-        </div>
-        <div class="row" style={{ padding: "10px" }}>
-          <div class="col-2">Piyush travels</div>
-          <div class="col-2">{busdata.time}</div>
-          <div class="col-2">{busdata.duration}</div>
-          <div class="col-2">
-            {parseFloat(busdata.time) + parseFloat(busdata.duration)}
+    <div className="container mt-5">
+      <h1 className="text-center text-light">Bus Seat Selection</h1>
+      <div className="row">
+        <div className="col-12 col-md-6 bg-secondary">
+          <div className="mb-4">
+            <p>From: {busdata.from}</p>
+            <p>To: {busdata.to}</p>
+            <p>Departure Date: {busdata.date}</p>
           </div>
-          <div class="col-2">{selectedSeat ? selectedSeat : "None"}</div>
-          <div class="col-2">{busdata.cost}</div>
+          <hr />
+          <div className="mb-4">
+            <p>Operator: Piyush travels</p>
+            <p>Departure Time: {busdata.time}</p>
+            <p>Duration: {busdata.duration}</p>
+            <p>Arrival: {parseFloat(busdata.time) + parseFloat(busdata.duration)}</p>
+            <p>Selected seat: {selectedSeat ? selectedSeat : "None"}</p>
+            <p>Price: {busdata.cost}</p>
+          </div>
+          <hr />
         </div>
-        <hr />
+        <div className="col-12 col-md-6">
+          <div className="form-group">
+            <label htmlFor="exampleInputPassword1">Select Passenger</label>
+            <select
+              className="form-control"
+              id="gender"
+              name="gender"
+              onChange={handleChange}
+            >
+              <option value="" key="0">
+                SELECT
+              </option>
+              {passData.length !== 0
+                ? passData.map((e) => {
+                    return (
+                      <option value={e.id} key={e.id}>
+                        {e.firstName + " " + e.lastName}
+                      </option>
+                    );
+                  })
+                : null}
+            </select>
+          </div>
+          <div className="text-center">
+            <p style={{ color: "white", fontSize: "20px" }}>
+              Select your seat:
+            </p>
+            <div className="d-flex flex-wrap justify-content-center">
+              {Array.from({ length: totalSeats }, (_, index) => (
+                <Seat
+                  key={index}
+                  seatNumber={index + 1}
+                  isSelected={selectedSeat === index + 1}
+                  onSelectSeat={handleSeatSelection}
+                />
+              ))}
+            </div>
+          </div>
+          <button onClick={handleSubmit} className="btn btn-success mt-3">
+            Pay & Book Seat
+          </button>
+        </div>
       </div>
       <ToastContainer />
-      <div class="form-group" style={{ width: "20%", margin: "0 auto" }}>
-        <label for="exampleInputPassword1">Select Passenger</label>
-        <select
-          className="form-control"
-          id="gender"
-          name="gender"
-          onChange={handleChange}>
-          <option value="" key="0">
-            SELECT
-          </option>
-          {passData.length != 0
-            ? passData.map((e) => {
-                return (
-                  <option value={e.id} key={e.id}>
-                    {e.firstName + " " + e.lastName}
-                  </option>
-                );
-              })
-            : console.log("array empty in seatBookComp")}
-        </select>
-      </div>
-
-      <div className="container mt-5">
-        <div className="text-center">
-          <p style={{ color: "white", fontSize: "20px" }}>Select your seat:</p>
-          <div className="d-flex flex-wrap justify-content-center">
-            {Array.from({ length: totalSeats }, (_, index) => (
-              <Seat
-                key={index}
-                seatNumber={index + 1}
-                isSelected={selectedSeat === index + 1}
-                onSelectSeat={handleSeatSelection}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <button onClick={handleSubmit} className="btn btn-success">
-        Pay & Book Seat
-      </button>
-    </>
+    </div>
   );
 }
 

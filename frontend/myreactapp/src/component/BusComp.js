@@ -2,50 +2,32 @@ import { Link } from "react-router-dom";
 
 function BusComp(props) {
 
-  const setDataToSorage = () =>{
-
+  const setDataToStorage = () => {
     var busdata = JSON.stringify(props)
-    sessionStorage.setItem("busdata",busdata)
-
+    sessionStorage.setItem("busdata", busdata)
   }
 
   return (
-    <>
-  
-    <div
-      className="card"
-      style={{
-        backgroundColor: "rgb(176,224,230)",
-        width: "60%",
-        left: "260px",
-        height: "140px",
-        marginTop: "20px",
-      }}>
-      <div class="card-body">
-        {/* <p class="card-text">
-          With supporting text below as a natural lead-in to additional content.
-        </p> */}
-
-        <div class="row">
-          <div class="col-sm">From:{props.data.from}</div>
-          <div class="col-sm">To:{props.data.to}</div>
-          <div class="col-sm">Duration:{props.data.duration}</div>
-          <div class="col-sm">Departure time:{props.data.time}</div>
-          
-        </div>
-        <br/>
-        <div class="row">
-          <div class="col-sm">date:{props.data.date}</div>
-          <div class="col-sm">Service Provider: Piyush Travels</div>
-          <div class="col-sm">Price:{props.data.cost}</div>
-          <Link to="/seatbook"><div onClick={setDataToSorage} class="col-sm btn btn-primary btn-sm">select seat</div></Link>
+    <div className="card mb-4 bg-info">
+      <div className="card-body">
+        <div className="row">
+          <div className="col-sm-6">
+            <p>From: {props.data.from}</p>
+            <p>To: {props.data.to}</p>
+            <p>Duration: {props.data.duration}</p>
+            <p>Departure time: {props.data.time}</p>
+          </div>
+          <div className="col-sm-6">
+            <p>Date: {props.data.date}</p>
+            <p>Service Provider: Piyush Travels</p>
+            <p>Price: {props.data.cost}</p>
+            <Link to="/seatbook">
+              <button onClick={setDataToStorage} className="btn btn-primary btn-sm">Select Seat</button>
+            </Link>
+          </div>
         </div>
       </div>
-
-      
     </div>
-    
-    </>
   );
 }
 

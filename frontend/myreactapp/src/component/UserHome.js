@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import api_ip from "./commonapi";
 
 function UserHome() {
   const [stationList, setStationList] = useState([]);
@@ -22,16 +23,15 @@ function UserHome() {
     // Check if the user has already logged in
     if (sessionStorage.getItem("isLoggedIn") === "true") {
       notify();
-      // Set localStorage to prevent repeated notifications
+      // Set sessionStorage to prevent repeated notifications
       sessionStorage.setItem("isLoggedIn", "false");
     }
 
     axios
-      .get("http://13.234.240.15:8080/station/getstations")
+      .get(`${api_ip}/station/getstations`)
       .then((response) => setStationList(response.data))
       .catch((error) => {
         console.log(error + "some error");
-        
       });
   }, []);
 
@@ -46,34 +46,27 @@ function UserHome() {
     };
 
     axios
-      .post("http://13.234.240.15:8080/bus/getbus", getBusData)
+      .post(`${api_ip}/bus/getbus`, getBusData)
       .then((response) => setBuses(response.data))
       .catch((error) => {
-        console.log(error + "some error1")
-        toast("No buses avaialble for this route...")
-      }
-        
-      );
+        console.log(error + "some error1");
+        toast("No buses available for this route...");
+      });
   };
 
   return (
-    <>
-      <form
-        className="form-inline"
-        style={{
-          marginTop: "40px",
-          marginLeft: "250px",
-        }}>
-        <div class="form-group mx-sm-3 mb-2">
-          <label for="exampleInputPassword1">
-            {" "}
-            <b>From: </b>{" "}
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-4">
+          <label htmlFor="from">
+            <b>From:</b>
           </label>
           <select
             className="form-control"
             style={{ width: "260px" }}
             name="from"
-            onChange={handleGetBusDataChange}>
+            onChange={handleGetBusDataChange}
+          >
             <option>select</option>
             {stationList.map((e) => {
               return (
@@ -85,17 +78,16 @@ function UserHome() {
           </select>
         </div>
 
-        {/* destination point dropdown, options needs to be fetched from backend */}
-        <div class="form-group mx-sm-3 mb-2">
-          <label for="exampleInputPassword1">
-            {" "}
-            <b>To: </b>{" "}
+        <div className="col-md-4">
+          <label htmlFor="to">
+            <b>To:</b>
           </label>
           <select
             name="to"
             onChange={handleGetBusDataChange}
             className="form-control"
-            style={{ width: "260px" }}>
+            style={{ width: "260px" }}
+          >
             <option>select</option>
 
             {stationList.map((e) => {
@@ -107,16 +99,27 @@ function UserHome() {
             })}
           </select>
         </div>
-        <button onClick={getBuses} type="button" class="btn btn-primary mb-2">
-          Search
-        </button>
-        <ToastContainer />
-      </form>
-      {buses.map((e) => {
-        console.log(e);
-        return <BusComp data={e} />;
-      })}
-    </>
+        <div className="col-md-4">
+          <button
+            onClick={getBuses}
+            type="button"
+            className="btn btn-primary mb-2"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+      <ToastContainer />
+      <div className="row mt-4">
+        {buses.map((e) => {
+          return (
+            <div className="col-md-4" key={e.id}>
+              <BusComp data={e} />
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 

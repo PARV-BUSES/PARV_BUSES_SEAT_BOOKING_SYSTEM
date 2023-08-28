@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AllRoutes from "./AllRoutes";
+import api_ip from "../commonapi";
 
 function AddBus() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function AddBus() {
     } else {
       axios
         .post(
-          "http://13.234.240.15:8080/bus/addbus/" + busdetails.routeId,
+          `${api_ip}/bus/addbus/` + busdetails.routeId,
           busdetails
         )
         .then((resp) => {

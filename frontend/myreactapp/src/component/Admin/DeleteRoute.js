@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import api_ip from "../commonapi";
 
 function DeleteRoute() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function DeleteRoute() {
 
   const deleteroute = () => {
     axios
-      .delete(`http://13.234.240.15:8080/route/deleteroute/${routeid}`)
+      .delete(`${api_ip}/route/deleteroute/${routeid}`)
       .then((resp) => {
         {
           console.log(resp);

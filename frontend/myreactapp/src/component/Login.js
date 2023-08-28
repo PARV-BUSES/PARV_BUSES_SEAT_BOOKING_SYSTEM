@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import api_ip from "./commonapi";
 
 // useEffect(() => {
 //   axios.post("http://localhost:8080/user/login")
@@ -31,7 +32,7 @@ function Login() {
   const handleLogin = () => {
     sessionStorage.clear()
     axios
-      .post("http://13.234.240.15:8080/user/login", loginData)
+      .post(`${api_ip}/user/login`, loginData)
       .then((res) => {setServerRes(res.data);console.log(res.status)})
       .catch((error) => {
         console.log(error.response.status);
